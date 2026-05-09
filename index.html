@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ARLUCO — Elevated Travel Clothing</title>
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg width='110' height='110' viewBox='0 0 110 110' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='110' height='110' fill='%232C2520'/%3E%3Crect x='12' y='12' width='86' height='86' fill='none' stroke='%23C4A882' stroke-width='0.75' transform='rotate(45 55 55)'/%3E%3Crect x='26' y='26' width='58' height='58' fill='none' stroke='%23C4A882' stroke-width='0.4' opacity='0.35' transform='rotate(45 55 55)'/%3E%3Ctext x='55' y='72' text-anchor='middle' font-family='Georgia%2C serif' font-size='46' fill='%23FAF8F4'%3EA%3C/text%3E%3Ccircle cx='55' cy='4' r='1.5' fill='%23B8765A'/%3E%3Ccircle cx='55' cy='106' r='1.5' fill='%23B8765A'/%3E%3Ccircle cx='4' cy='55' r='1.5' fill='%23B8765A'/%3E%3Ccircle cx='106' cy='55' r='1.5' fill='%23B8765A'/%3E%3C/svg%3E"
-    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg width='110' height='110' viewBox='0 0 110 110' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='110' height='110' fill='%232C2520'/%3E%3Crect x='12' y='12' width='86' height='86' fill='none' stroke='%23C4A882' stroke-width='0.75' transform='rotate(45 55 55)'/%3E%3Ctext x='55' y='72' text-anchor='middle' font-family='Georgia%2C serif' font-size='46' fill='%23FAF8F4'%3EA%3C/text%3E%3Ccircle cx='55' cy='4' r='1.5' fill='%23B8765A'/%3E%3Ccircle cx='55' cy='106' r='1.5' fill='%23B8765A'/%3E%3Ccircle cx='4' cy='55' r='1.5' fill='%23B8765A'/%3E%3Ccircle cx='106' cy='55' r='1.5' fill='%23B8765A'/%3E%3C/svg%3E"
     />
     <style>
       :root {
@@ -40,20 +40,22 @@
         font-weight: 300;
         overflow-x: hidden;
       }
+
+      /* ─── NAV ─── */
       nav {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        z-index: 100;
+        z-index: 200;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 20px 60px;
-        background: rgba(250, 248, 244, 0.94);
-        backdrop-filter: blur(12px);
+        padding: 18px 60px;
+        background: rgba(250, 248, 244, 0.96);
+        backdrop-filter: blur(14px);
         border-bottom: 1px solid rgba(196, 168, 130, 0.2);
-        transition: padding 0.4s ease;
+        transition: padding 0.4s;
       }
       .nav-logo {
         display: flex;
@@ -62,7 +64,7 @@
       }
       .nav-links {
         display: flex;
-        gap: 36px;
+        gap: 34px;
         list-style: none;
       }
       .nav-links a {
@@ -74,15 +76,29 @@
         transition: color 0.3s;
         cursor: pointer;
       }
-      .nav-links a:hover {
+      .nav-links a:hover,
+      .nav-links a.active {
         color: var(--terracotta);
       }
-      .nav-actions {
+      .nav-right {
         display: flex;
-        gap: 16px;
+        gap: 20px;
         align-items: center;
       }
-      .nav-cart {
+      .nav-search {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--mid);
+        cursor: pointer;
+        transition: color 0.3s;
+        background: none;
+        border: none;
+        font-family: "Jost", sans-serif;
+      }
+      .nav-search:hover {
+        color: var(--terracotta);
+      }
+      .nav-cart-btn {
         background: var(--deep);
         color: var(--warm-white);
         padding: 9px 22px;
@@ -93,9 +109,25 @@
         transition: background 0.3s;
         border: none;
         font-family: "Jost", sans-serif;
+        position: relative;
       }
-      .nav-cart:hover {
+      .nav-cart-btn:hover {
         background: var(--terracotta);
+      }
+      .cart-count {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: var(--terracotta);
+        color: #fff;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        font-size: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
       }
       .hamburger {
         display: none;
@@ -110,6 +142,8 @@
         height: 1px;
         background: var(--deep);
       }
+
+      /* ─── MOBILE MENU ─── */
       .mobile-menu {
         display: none;
         flex-direction: column;
@@ -119,7 +153,7 @@
         right: 0;
         bottom: 0;
         background: var(--warm-white);
-        z-index: 200;
+        z-index: 300;
         padding: 80px 40px 40px;
         transform: translateX(-100%);
         transition: transform 0.4s ease;
@@ -150,18 +184,312 @@
         cursor: pointer;
         display: block;
       }
-      .mobile-menu a:last-child {
-        border-bottom: none;
-      }
       .mobile-menu a:hover {
         color: var(--terracotta);
       }
+
+      /* ─── PAGES ─── */
+      .page {
+        display: none;
+        min-height: 100vh;
+      }
+      .page.active {
+        display: block;
+      }
+
+      /* ─── CART DRAWER ─── */
+      .cart-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(44, 37, 32, 0.5);
+        z-index: 400;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .cart-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .cart-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 420px;
+        max-width: 100vw;
+        background: var(--warm-white);
+        z-index: 401;
+        transform: translateX(100%);
+        transition: transform 0.4s ease;
+        display: flex;
+        flex-direction: column;
+      }
+      .cart-drawer.open {
+        transform: translateX(0);
+      }
+      .cart-header {
+        padding: 32px 28px 20px;
+        border-bottom: 1px solid rgba(196, 168, 130, 0.2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .cart-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 26px;
+        font-weight: 300;
+        color: var(--deep);
+      }
+      .cart-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--mid);
+      }
+      .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px 28px;
+      }
+      .cart-empty {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--light-mid);
+        font-size: 13px;
+        letter-spacing: 0.05em;
+      }
+      .cart-item {
+        display: grid;
+        grid-template-columns: 80px 1fr auto;
+        gap: 16px;
+        align-items: start;
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(196, 168, 130, 0.15);
+      }
+      .cart-item-img {
+        width: 80px;
+        height: 96px;
+        object-fit: cover;
+        background: var(--bone);
+      }
+      .cart-item-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 17px;
+        color: var(--deep);
+        margin-bottom: 4px;
+      }
+      .cart-item-detail {
+        font-size: 10px;
+        color: var(--light-mid);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .cart-item-price {
+        font-size: 14px;
+        color: var(--deep);
+        font-weight: 400;
+      }
+      .cart-item-remove {
+        font-size: 10px;
+        color: var(--light-mid);
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-family: "Jost", sans-serif;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .cart-item-remove:hover {
+        color: var(--terracotta);
+      }
+      .cart-footer {
+        padding: 24px 28px 32px;
+        border-top: 1px solid rgba(196, 168, 130, 0.2);
+      }
+      .cart-subtotal {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .cart-subtotal-label {
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mid);
+      }
+      .cart-subtotal-amount {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 24px;
+        color: var(--deep);
+      }
+      .cart-checkout {
+        width: 100%;
+        background: var(--deep);
+        color: var(--warm-white);
+        padding: 16px;
+        font-family: "Jost", sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-bottom: 10px;
+      }
+      .cart-checkout:hover {
+        background: var(--terracotta);
+      }
+      .cart-continue {
+        width: 100%;
+        background: transparent;
+        color: var(--mid);
+        padding: 12px;
+        font-family: "Jost", sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        border: 1px solid rgba(196, 168, 130, 0.4);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .cart-continue:hover {
+        border-color: var(--deep);
+        color: var(--deep);
+      }
+
+      /* ─── BUTTONS ─── */
+      .btn-primary {
+        background: var(--deep);
+        color: var(--warm-white);
+        padding: 15px 38px;
+        font-family: "Jost", sans-serif;
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .btn-primary:hover {
+        background: var(--terracotta);
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--deep);
+        padding: 14px 36px;
+        font-family: "Jost", sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        border: 1px solid var(--deep);
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .btn-outline:hover {
+        background: var(--deep);
+        color: var(--warm-white);
+      }
+      .btn-ghost {
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mid);
+        cursor: pointer;
+        border-bottom: 1px solid var(--clay);
+        padding-bottom: 2px;
+        transition: color 0.3s;
+        text-decoration: none;
+        background: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        font-family: "Jost", sans-serif;
+      }
+      .btn-ghost:hover {
+        color: var(--terracotta);
+      }
+
+      /* ─── MARQUEE ─── */
+      .marquee-strip {
+        background: var(--deep);
+        padding: 13px 0;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .marquee-content {
+        display: inline-flex;
+        gap: 60px;
+        animation: marqueeScroll 22s linear infinite;
+      }
+      .marquee-item {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--clay);
+      }
+      .marquee-dot {
+        color: var(--terracotta);
+        font-size: 14px;
+      }
+      @keyframes marqueeScroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ─── SECTION TYPOGRAPHY ─── */
+      .section-eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--clay);
+        margin-bottom: 14px;
+      }
+      .section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(32px, 4vw, 52px);
+        font-weight: 300;
+        color: var(--deep);
+        line-height: 1.15;
+      }
+      .section-title em {
+        font-style: italic;
+        color: var(--terracotta);
+      }
+      .section-sub {
+        font-size: 12px;
+        color: var(--light-mid);
+        letter-spacing: 0.04em;
+        margin-top: 10px;
+        line-height: 1.8;
+      }
+
+      /* ──────────────────────────────────────────
+   PAGE: HOME
+────────────────────────────────────────── */
+
+      /* HERO */
       .hero {
         height: 100vh;
         display: grid;
         grid-template-columns: 1fr 1fr;
         padding-top: 70px;
         overflow: hidden;
+        position: relative;
       }
       .hero-left {
         display: flex;
@@ -179,9 +507,9 @@
       }
       .hero-title {
         font-family: "Cormorant Garamond", serif;
-        font-size: clamp(52px, 7vw, 88px);
+        font-size: clamp(52px, 7vw, 92px);
         font-weight: 300;
-        line-height: 1;
+        line-height: 0.98;
         color: var(--deep);
         margin-bottom: 28px;
         animation: fadeInUp 0.8s ease 0.4s both;
@@ -205,73 +533,39 @@
         align-items: center;
         animation: fadeInUp 0.8s ease 0.8s both;
       }
-      .btn-primary {
-        background: var(--deep);
-        color: var(--warm-white);
-        padding: 15px 38px;
-        font-family: "Jost", sans-serif;
-        font-size: 10px;
-        font-weight: 400;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-block;
-      }
-      .btn-primary:hover {
-        background: var(--terracotta);
-        transform: translateY(-1px);
-      }
-      .btn-ghost {
-        font-size: 11px;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--mid);
-        cursor: pointer;
-        border-bottom: 1px solid var(--clay);
-        padding-bottom: 2px;
-        transition: color 0.3s;
-        text-decoration: none;
-      }
-      .btn-ghost:hover {
-        color: var(--terracotta);
-      }
       .hero-right {
         position: relative;
         overflow: hidden;
       }
-      .hero-visual {
+      .hero-img {
         width: 100%;
         height: 100%;
-        background: linear-gradient(
-          160deg,
-          #d4c4b0 0%,
-          #c4a882 30%,
-          #b8765a 60%,
-          #8b5e3c 100%
-        );
-        position: relative;
-        display: flex;
-        align-items: flex-end;
-        padding: 60px;
+        object-fit: cover;
+        transition: transform 8s ease;
       }
-      .hero-visual::before {
-        content: "";
+      .hero-img:hover {
+        transform: scale(1.04);
+      }
+      .hero-img-overlay {
         position: absolute;
         inset: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        background: linear-gradient(
+          to right,
+          rgba(250, 248, 244, 0.15) 0%,
+          transparent 30%
+        );
       }
-      .hero-visual-text {
-        position: relative;
+      .hero-caption {
+        position: absolute;
+        bottom: 40px;
+        left: 40px;
         z-index: 2;
       }
-      .hero-visual-text p {
+      .hero-caption p {
         font-family: "Cormorant Garamond", serif;
         font-size: 13px;
         font-style: italic;
-        color: rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.85);
         letter-spacing: 0.1em;
       }
       .hero-scroll {
@@ -305,308 +599,95 @@
           transform: translateX(-50%) translateY(6px);
         }
       }
-      .marquee-strip {
-        background: var(--deep);
-        padding: 14px 0;
-        overflow: hidden;
-        white-space: nowrap;
-      }
-      .marquee-content {
-        display: inline-flex;
-        gap: 60px;
-        animation: marqueeScroll 22s linear infinite;
-      }
-      .marquee-item {
-        font-size: 10px;
-        letter-spacing: 0.3em;
-        text-transform: uppercase;
-        color: var(--clay);
-      }
-      .marquee-dot {
-        color: var(--terracotta);
-        font-size: 14px;
-      }
-      @keyframes marqueeScroll {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(-50%);
-        }
-      }
-      .collection-section {
-        padding-top: 80px;
-      }
-      .section-header {
-        text-align: center;
-        padding: 80px 60px 40px;
-      }
-      .section-eyebrow {
-        font-size: 10px;
-        letter-spacing: 0.35em;
-        text-transform: uppercase;
-        color: var(--clay);
-        margin-bottom: 16px;
-      }
-      .section-title {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(32px, 4vw, 50px);
-        font-weight: 300;
-        color: var(--deep);
-        line-height: 1.2;
-      }
-      .section-title em {
-        font-style: italic;
-        color: var(--terracotta);
-      }
-      .section-sub {
-        font-size: 12px;
-        color: var(--light-mid);
-        letter-spacing: 0.05em;
-        margin-top: 12px;
-      }
 
-      /* GENDER TABS */
-      .gender-tabs {
+      /* HOME FEATURED GRID */
+      .featured-section {
+        padding: 100px 60px;
+      }
+      .featured-header {
         display: flex;
-        justify-content: center;
-        margin: 0 60px 0;
-        border-bottom: 1px solid rgba(196, 168, 130, 0.3);
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 48px;
       }
-      .gender-tab {
-        font-size: 11px;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: var(--light-mid);
-        padding: 14px 48px;
-        cursor: pointer;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -1px;
-        transition: all 0.3s;
-      }
-      .gender-tab.active {
-        color: var(--deep);
-        border-bottom-color: var(--deep);
-      }
-      .gender-tab:hover {
-        color: var(--mid);
-      }
-
-      /* PRODUCTS GRID */
-      .products-grid {
+      .featured-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 2px;
-        padding: 32px 60px 80px;
-        max-width: 1440px;
-        margin: 0 auto;
       }
-      .product-card {
+      .featured-card {
         position: relative;
+        overflow: hidden;
         cursor: pointer;
-        overflow: hidden;
-        background: var(--bone);
-      }
-      .product-card.featured {
-        grid-column: span 2;
-      }
-      .product-visual {
-        width: 100%;
         aspect-ratio: 3/4;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
       }
-      .product-card.featured .product-visual {
-        aspect-ratio: 16/9;
+      .featured-card.large {
+        grid-column: span 2;
+        aspect-ratio: unset;
       }
-      .product-img-placeholder {
+      .feat-img {
         width: 100%;
         height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.6s ease;
+        object-fit: cover;
+        transition: transform 0.7s ease;
       }
-      .product-card:hover .product-img-placeholder {
+      .featured-card:hover .feat-img {
         transform: scale(1.04);
       }
-      .p1 {
-        background: linear-gradient(135deg, #d4c4b0 0%, #b8976a 100%);
-      }
-      .p2 {
-        background: linear-gradient(135deg, #c0c8d4 0%, #6a80a0 100%);
-      }
-      .p3 {
-        background: linear-gradient(135deg, #c8d4c0 0%, #8a9e80 100%);
-      }
-      .p4 {
-        background: linear-gradient(135deg, #d4c0c0 0%, #a07070 100%);
-      }
-      .p5 {
-        background: linear-gradient(135deg, #c8c4b8 0%, #7a7060 100%);
-      }
-      .p6 {
-        background: linear-gradient(135deg, #1c2535 0%, #3a4a60 100%);
-      }
-      .product-icon {
-        font-size: 56px;
-        opacity: 0.22;
-        user-select: none;
-        position: absolute;
-      }
-      .product-tag {
-        position: absolute;
-        top: 16px;
-        left: 16px;
-        background: var(--terracotta);
-        color: white;
-        font-size: 8px;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        padding: 4px 10px;
-        z-index: 2;
-      }
-      .product-overlay {
+      .feat-overlay {
         position: absolute;
         inset: 0;
-        background: rgba(44, 37, 32, 0);
-        transition: background 0.4s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 3;
+        background: linear-gradient(
+          to top,
+          rgba(44, 37, 32, 0.7) 0%,
+          rgba(44, 37, 32, 0) 50%
+        );
+        transition: background 0.4s;
       }
-      .product-card:hover .product-overlay {
-        background: rgba(44, 37, 32, 0.32);
+      .feat-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 28px 24px;
       }
-      .product-overlay-btn {
-        opacity: 0;
-        transform: translateY(10px);
-        transition: all 0.3s ease 0.05s;
-        background: var(--warm-white);
-        color: var(--deep);
-        padding: 11px 28px;
-        font-size: 9px;
-        font-family: "Jost", sans-serif;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        border: none;
-        cursor: pointer;
-        font-weight: 400;
-      }
-      .product-card:hover .product-overlay-btn {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .product-info {
-        padding: 18px 20px 24px;
-        background: var(--warm-white);
-        border-top: 1px solid rgba(196, 168, 130, 0.2);
-      }
-      .product-category {
+      .feat-tag {
         font-size: 9px;
         letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: var(--clay);
-        margin-bottom: 5px;
-      }
-      .product-name {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 19px;
-        font-weight: 400;
-        color: var(--deep);
-        margin-bottom: 4px;
-      }
-      .product-desc {
-        font-size: 11px;
-        color: var(--light-mid);
-        letter-spacing: 0.03em;
-        line-height: 1.6;
-        margin-bottom: 14px;
-      }
-      .product-price-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .product-price {
-        font-size: 15px;
-        font-weight: 400;
-        color: var(--deep);
-        letter-spacing: 0.05em;
-      }
-      .product-colors {
-        display: flex;
-        gap: 5px;
-      }
-      .color-dot {
-        width: 11px;
-        height: 11px;
-        border-radius: 50%;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        transition: transform 0.2s;
-      }
-      .color-dot:hover {
-        transform: scale(1.3);
-      }
-
-      /* SIZE SELECTOR */
-      .size-row {
-        display: flex;
-        gap: 6px;
-        margin-bottom: 14px;
-        flex-wrap: wrap;
-      }
-      .size-btn {
-        font-size: 9px;
-        letter-spacing: 0.1em;
-        color: var(--mid);
-        padding: 4px 8px;
-        border: 1px solid rgba(196, 168, 130, 0.35);
-        cursor: pointer;
-        background: transparent;
-        font-family: "Jost", sans-serif;
-        transition: all 0.2s;
-      }
-      .size-btn:hover {
-        border-color: var(--deep);
-        color: var(--deep);
-      }
-      .size-label {
-        font-size: 9px;
-        letter-spacing: 0.2em;
         text-transform: uppercase;
         color: var(--clay);
         margin-bottom: 6px;
       }
-
-      /* ADD TO CART BTN */
-      .add-to-cart {
-        width: 100%;
-        background: var(--deep);
-        color: var(--warm-white);
-        padding: 12px;
-        font-family: "Jost", sans-serif;
+      .feat-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        font-weight: 300;
+        color: #fff;
+        margin-bottom: 4px;
+      }
+      .feat-price {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .feat-cta {
+        display: inline-block;
+        margin-top: 12px;
         font-size: 9px;
-        letter-spacing: 0.25em;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
-        border: none;
-        cursor: pointer;
-        transition: background 0.3s;
-        margin-top: 4px;
-        font-weight: 400;
+        color: #fff;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        padding-bottom: 2px;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: all 0.3s;
       }
-      .add-to-cart:hover {
-        background: var(--terracotta);
+      .featured-card:hover .feat-cta {
+        opacity: 1;
+        transform: translateY(0);
       }
 
-      /* BRAND STRIP */
+      /* HOME BRAND STRIP */
       .brand-strip {
         background: var(--sand);
         display: grid;
@@ -615,7 +696,7 @@
         border-bottom: 1px solid rgba(196, 168, 130, 0.3);
       }
       .brand-strip-item {
-        padding: 56px 40px;
+        padding: 52px 40px;
         text-align: center;
         border-right: 1px solid rgba(196, 168, 130, 0.3);
         transition: background 0.3s;
@@ -627,8 +708,8 @@
         background: var(--bone);
       }
       .strip-icon {
-        font-size: 26px;
-        margin-bottom: 18px;
+        font-size: 24px;
+        margin-bottom: 16px;
         display: block;
       }
       .strip-title {
@@ -636,47 +717,25 @@
         font-size: 20px;
         font-weight: 400;
         color: var(--deep);
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
       .strip-desc {
         font-size: 11px;
         line-height: 1.8;
         color: var(--mid);
-        letter-spacing: 0.03em;
       }
 
-      /* EDITORIAL */
+      /* HOME EDITORIAL */
       .editorial {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        min-height: 560px;
+        min-height: 620px;
         margin: 80px 0;
       }
-      .editorial-visual {
-        background: linear-gradient(150deg, #8b6f5c 0%, #5c3d2e 100%);
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: flex-end;
-        padding: 60px;
-      }
-      .editorial-visual::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M20 20.5V18H0v5h5v5H0v5h20v-5h15v-5H20v-.5z'/%3E%3C/g%3E%3C/svg%3E");
-      }
-      .editorial-visual-content {
-        position: relative;
-        z-index: 2;
-      }
-      .editorial-visual-content p {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 46px;
-        font-style: italic;
-        color: rgba(255, 255, 255, 0.9);
-        line-height: 1.1;
-        font-weight: 300;
+      .editorial-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
       .editorial-content {
         background: var(--bone);
@@ -685,13 +744,9 @@
         justify-content: center;
         padding: 80px;
       }
-      .editorial-content .section-eyebrow {
-        text-align: left;
-        margin-bottom: 20px;
-      }
       .editorial-content h2 {
         font-family: "Cormorant Garamond", serif;
-        font-size: 38px;
+        font-size: 40px;
         font-weight: 300;
         color: var(--deep);
         line-height: 1.2;
@@ -705,14 +760,83 @@
         max-width: 440px;
       }
 
-      /* NEWSLETTER */
+      /* HOME BUNDLES TEASER */
+      .bundles-section {
+        padding: 100px 60px;
+        background: var(--deep);
+      }
+      .bundles-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        margin-top: 48px;
+      }
+      .bundle-card {
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .bundle-img {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        transition: transform 0.7s;
+      }
+      .bundle-card:hover .bundle-img {
+        transform: scale(1.04);
+      }
+      .bundle-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(44, 37, 32, 0.8) 0%,
+          transparent 50%
+        );
+      }
+      .bundle-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 28px 22px;
+      }
+      .bundle-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 20px;
+        color: #fff;
+        margin-bottom: 4px;
+      }
+      .bundle-price-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .bundle-price {
+        font-size: 15px;
+        color: #fff;
+        font-weight: 400;
+      }
+      .bundle-was {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: line-through;
+      }
+      .bundle-save {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--clay);
+        background: rgba(196, 168, 130, 0.15);
+        padding: 2px 8px;
+        border: 1px solid rgba(196, 168, 130, 0.3);
+      }
+
+      /* HOME NEWSLETTER */
       .newsletter {
         background: var(--deep);
         padding: 96px 60px;
         text-align: center;
-      }
-      .newsletter .section-eyebrow {
-        color: var(--clay);
       }
       .newsletter h2 {
         font-family: "Cormorant Garamond", serif;
@@ -730,7 +854,6 @@
         font-size: 13px;
         color: rgba(250, 248, 244, 0.5);
         margin-bottom: 44px;
-        letter-spacing: 0.03em;
       }
       .newsletter-form {
         display: flex;
@@ -746,7 +869,6 @@
         color: var(--warm-white);
         font-family: "Jost", sans-serif;
         font-size: 12px;
-        letter-spacing: 0.05em;
         outline: none;
       }
       .newsletter-input::placeholder {
@@ -757,8 +879,8 @@
       }
       .newsletter-btn {
         background: var(--terracotta);
-        color: white;
-        padding: 15px 30px;
+        color: #fff;
+        padding: 15px 28px;
         border: none;
         font-family: "Jost", sans-serif;
         font-size: 10px;
@@ -766,13 +888,771 @@
         text-transform: uppercase;
         cursor: pointer;
         transition: background 0.3s;
-        font-weight: 400;
       }
       .newsletter-btn:hover {
         background: var(--clay);
       }
 
-      /* FOOTER */
+      /* ──────────────────────────────────────────
+   PAGE: COLLECTION (women / men)
+────────────────────────────────────────── */
+      .collection-hero {
+        height: 55vh;
+        position: relative;
+        overflow: hidden;
+        margin-top: 70px;
+      }
+      .collection-hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 30%;
+      }
+      .collection-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(44, 37, 32, 0.35);
+      }
+      .collection-hero-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .collection-hero-text h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(48px, 7vw, 80px);
+        font-weight: 300;
+        color: #fff;
+        letter-spacing: 0.05em;
+      }
+      .collection-hero-text p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 12px;
+        letter-spacing: 0.05em;
+      }
+      .collection-grid-section {
+        padding: 60px;
+      }
+      .collection-filters {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+      }
+      .filter-btn {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mid);
+        padding: 8px 20px;
+        cursor: pointer;
+        border: 1px solid rgba(196, 168, 130, 0.3);
+        background: transparent;
+        font-family: "Jost", sans-serif;
+        transition: all 0.3s;
+      }
+      .filter-btn.active {
+        background: var(--deep);
+        color: var(--warm-white);
+        border-color: var(--deep);
+      }
+      .filter-btn:hover:not(.active) {
+        border-color: var(--clay);
+        color: var(--deep);
+      }
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+      }
+      .product-card {
+        cursor: pointer;
+        overflow: hidden;
+      }
+      .product-img-wrap {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 3/4;
+        background: var(--bone);
+      }
+      .product-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s ease;
+      }
+      .product-card:hover .product-img {
+        transform: scale(1.05);
+      }
+      .product-img-alt {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+      .product-card:hover .product-img-alt {
+        opacity: 1;
+      }
+      .product-tag-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: var(--terracotta);
+        color: #fff;
+        font-size: 8px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        z-index: 2;
+      }
+      .product-quick-add {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(44, 37, 32, 0.9);
+        color: #fff;
+        padding: 12px;
+        font-family: "Jost", sans-serif;
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        width: 100%;
+      }
+      .product-card:hover .product-quick-add {
+        transform: translateY(0);
+      }
+      .product-info {
+        padding: 16px 0 0;
+      }
+      .product-category {
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--clay);
+        margin-bottom: 4px;
+      }
+      .product-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 19px;
+        color: var(--deep);
+        margin-bottom: 4px;
+      }
+      .product-desc-short {
+        font-size: 11px;
+        color: var(--light-mid);
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+      .product-price-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .product-price {
+        font-size: 15px;
+        color: var(--deep);
+      }
+      .product-was {
+        font-size: 12px;
+        color: var(--light-mid);
+        text-decoration: line-through;
+        margin-left: 8px;
+      }
+      .color-swatches {
+        display: flex;
+        gap: 5px;
+      }
+      .swatch {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .swatch:hover {
+        transform: scale(1.3);
+      }
+
+      /* ──────────────────────────────────────────
+   PAGE: PRODUCT DETAIL
+────────────────────────────────────────── */
+      .pdp {
+        padding-top: 70px;
+      }
+      .pdp-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: calc(100vh - 70px);
+      }
+      .pdp-gallery {
+        position: relative;
+        background: var(--bone);
+      }
+      .pdp-main-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        max-height: 90vh;
+      }
+      .pdp-thumbnails {
+        display: flex;
+        gap: 8px;
+        padding: 16px 24px;
+        background: var(--warm-white);
+      }
+      .pdp-thumb {
+        width: 72px;
+        height: 86px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.2s;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+      .pdp-thumb.active,
+      .pdp-thumb:hover {
+        border-color: var(--deep);
+        opacity: 1;
+      }
+      .pdp-info {
+        padding: 60px 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-y: auto;
+      }
+      .pdp-breadcrumb {
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--light-mid);
+        margin-bottom: 28px;
+        cursor: pointer;
+      }
+      .pdp-breadcrumb span {
+        color: var(--clay);
+      }
+      .pdp-badge {
+        display: inline-block;
+        font-size: 8px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #fff;
+        background: var(--terracotta);
+        padding: 4px 10px;
+        margin-bottom: 16px;
+      }
+      .pdp-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(32px, 3.5vw, 46px);
+        font-weight: 300;
+        color: var(--deep);
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+      .pdp-material {
+        font-size: 11px;
+        color: var(--clay);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .pdp-price {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 32px;
+        color: var(--deep);
+        margin-bottom: 24px;
+      }
+      .pdp-was {
+        font-size: 16px;
+        color: var(--light-mid);
+        text-decoration: line-through;
+        margin-left: 10px;
+      }
+      .pdp-divider {
+        height: 1px;
+        background: rgba(196, 168, 130, 0.3);
+        margin: 24px 0;
+      }
+      .pdp-label {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mid);
+        margin-bottom: 10px;
+      }
+      .color-options {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+      .color-opt {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .color-opt.active,
+      .color-opt:hover {
+        border-color: var(--deep);
+        transform: scale(1.1);
+      }
+      .color-opt-name {
+        font-size: 10px;
+        color: var(--mid);
+        margin-left: 8px;
+        letter-spacing: 0.05em;
+      }
+      .size-options {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+      .size-opt {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        padding: 10px 16px;
+        border: 1px solid rgba(196, 168, 130, 0.4);
+        cursor: pointer;
+        background: transparent;
+        font-family: "Jost", sans-serif;
+        color: var(--mid);
+        transition: all 0.2s;
+      }
+      .size-opt:hover,
+      .size-opt.active {
+        background: var(--deep);
+        color: var(--warm-white);
+        border-color: var(--deep);
+      }
+      .size-opt.sold-out {
+        opacity: 0.35;
+        text-decoration: line-through;
+        cursor: not-allowed;
+      }
+      .pdp-add-btn {
+        width: 100%;
+        background: var(--deep);
+        color: var(--warm-white);
+        padding: 17px;
+        font-family: "Jost", sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-bottom: 12px;
+      }
+      .pdp-add-btn:hover {
+        background: var(--terracotta);
+      }
+      .pdp-save-btn {
+        width: 100%;
+        background: transparent;
+        color: var(--mid);
+        padding: 14px;
+        font-family: "Jost", sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        border: 1px solid rgba(196, 168, 130, 0.4);
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-bottom: 28px;
+      }
+      .pdp-save-btn:hover {
+        border-color: var(--deep);
+        color: var(--deep);
+      }
+      .pdp-details {
+        margin-bottom: 24px;
+      }
+      .pdp-details summary {
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--deep);
+        cursor: pointer;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(196, 168, 130, 0.2);
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+      }
+      .pdp-details summary::after {
+        content: "+";
+      }
+      .pdp-details[open] summary::after {
+        content: "−";
+      }
+      .pdp-details p,
+      .pdp-details ul {
+        font-size: 12px;
+        line-height: 1.9;
+        color: var(--mid);
+        padding: 14px 0;
+      }
+      .pdp-details ul {
+        padding-left: 16px;
+      }
+      .pdp-details li {
+        margin-bottom: 4px;
+      }
+      .pdp-guarantee {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        background: var(--sand);
+        padding: 16px 20px;
+        margin-top: 8px;
+      }
+      .pdp-guarantee-text {
+        font-size: 11px;
+        color: var(--mid);
+        line-height: 1.6;
+      }
+      .pdp-guarantee-text strong {
+        color: var(--deep);
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      /* ──────────────────────────────────────────
+   PAGE: BUNDLES
+────────────────────────────────────────── */
+      .bundles-page {
+        padding-top: 70px;
+      }
+      .bundles-page-hero {
+        height: 50vh;
+        position: relative;
+        overflow: hidden;
+      }
+      .bundles-page-hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 40%;
+      }
+      .bundles-page-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(44, 37, 32, 0.45);
+      }
+      .bundles-page-hero-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .bundles-page-hero-text h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(42px, 6vw, 72px);
+        font-weight: 300;
+        color: #fff;
+      }
+      .bundles-page-hero-text p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 13px;
+        margin-top: 12px;
+      }
+      .bundle-detail-section {
+        padding: 80px 60px;
+      }
+      .bundle-detail {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        margin-bottom: 2px;
+        background: var(--bone);
+      }
+      .bundle-detail:nth-child(even) {
+        direction: rtl;
+      }
+      .bundle-detail:nth-child(even) > * {
+        direction: ltr;
+      }
+      .bundle-detail-img {
+        width: 100%;
+        height: 580px;
+        object-fit: cover;
+      }
+      .bundle-detail-content {
+        padding: 60px 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .bundle-detail-eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--clay);
+        margin-bottom: 14px;
+      }
+      .bundle-detail-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        font-weight: 300;
+        color: var(--deep);
+        margin-bottom: 16px;
+        line-height: 1.15;
+      }
+      .bundle-detail-desc {
+        font-size: 13px;
+        line-height: 1.9;
+        color: var(--mid);
+        margin-bottom: 24px;
+      }
+      .bundle-includes-list {
+        margin-bottom: 28px;
+      }
+      .bundle-includes-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(196, 168, 130, 0.2);
+      }
+      .bundle-includes-item:last-child {
+        border-bottom: none;
+      }
+      .bundle-item-name {
+        font-size: 12px;
+        color: var(--deep);
+      }
+      .bundle-item-price {
+        font-size: 12px;
+        color: var(--light-mid);
+      }
+      .bundle-price-section {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .bundle-total {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 36px;
+        color: var(--deep);
+      }
+      .bundle-original {
+        font-size: 16px;
+        color: var(--light-mid);
+        text-decoration: line-through;
+      }
+      .bundle-saving {
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--terracotta);
+      }
+      .bundle-size-row {
+        margin-bottom: 20px;
+      }
+      .bundle-size-label {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mid);
+        margin-bottom: 8px;
+      }
+      .bundle-sizes {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .bundle-size-btn {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        padding: 8px 14px;
+        border: 1px solid rgba(196, 168, 130, 0.4);
+        cursor: pointer;
+        background: transparent;
+        font-family: "Jost", sans-serif;
+        color: var(--mid);
+        transition: all 0.2s;
+      }
+      .bundle-size-btn:hover,
+      .bundle-size-btn.active {
+        background: var(--deep);
+        color: #fff;
+        border-color: var(--deep);
+      }
+      .bundle-add-btn {
+        width: 100%;
+        background: var(--terracotta);
+        color: #fff;
+        padding: 16px;
+        font-family: "Jost", sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .bundle-add-btn:hover {
+        background: var(--deep);
+      }
+
+      /* ──────────────────────────────────────────
+   PAGE: ABOUT
+────────────────────────────────────────── */
+      .about-page {
+        padding-top: 70px;
+      }
+      .about-hero {
+        height: 70vh;
+        position: relative;
+        overflow: hidden;
+      }
+      .about-hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 25%;
+      }
+      .about-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(44, 37, 32, 0.1),
+          rgba(44, 37, 32, 0.5)
+        );
+      }
+      .about-hero-text {
+        position: absolute;
+        bottom: 60px;
+        left: 80px;
+      }
+      .about-hero-text p {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(36px, 5vw, 64px);
+        font-weight: 300;
+        color: #fff;
+        font-style: italic;
+        line-height: 1.1;
+      }
+      .about-content {
+        max-width: 780px;
+        margin: 80px auto;
+        padding: 0 40px;
+      }
+      .about-content h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        font-weight: 300;
+        color: var(--deep);
+        margin-bottom: 24px;
+      }
+      .about-content p {
+        font-size: 14px;
+        line-height: 2.1;
+        color: var(--mid);
+        margin-bottom: 24px;
+      }
+      .about-values {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        margin: 80px 0;
+      }
+      .about-value {
+        background: var(--bone);
+        padding: 48px 36px;
+        text-align: center;
+      }
+      .about-value-icon {
+        font-size: 28px;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .about-value h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        font-weight: 400;
+        color: var(--deep);
+        margin-bottom: 12px;
+      }
+      .about-value p {
+        font-size: 12px;
+        line-height: 1.9;
+        color: var(--mid);
+      }
+      .about-quince {
+        background: var(--deep);
+        padding: 80px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .about-quince h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 36px;
+        font-weight: 300;
+        color: var(--warm-white);
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+      .about-quince p {
+        font-size: 13px;
+        line-height: 1.9;
+        color: rgba(250, 248, 244, 0.6);
+      }
+      .about-quince-detail {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .about-quince-item {
+        padding: 20px 24px;
+        background: rgba(255, 255, 255, 0.05);
+        border-left: 2px solid var(--terracotta);
+      }
+      .about-quince-item strong {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--clay);
+        margin-bottom: 4px;
+      }
+      .about-quince-item span {
+        font-size: 13px;
+        color: rgba(250, 248, 244, 0.7);
+      }
+
+      /* ──────────────────────────────────────────
+   FOOTER
+────────────────────────────────────────── */
       footer {
         background: var(--deep);
         border-top: 1px solid rgba(196, 168, 130, 0.15);
@@ -784,17 +1664,12 @@
         gap: 56px;
         margin-bottom: 56px;
       }
-      .footer-brand .nav-logo {
-        font-size: 30px;
-        color: var(--warm-white);
-        margin-bottom: 18px;
-        display: block;
-      }
       .footer-brand p {
         font-size: 12px;
         line-height: 1.9;
         color: rgba(250, 248, 244, 0.4);
         max-width: 280px;
+        margin-top: 18px;
       }
       .footer-col h4 {
         font-size: 10px;
@@ -812,7 +1687,6 @@
         color: rgba(250, 248, 244, 0.4);
         cursor: pointer;
         transition: color 0.3s;
-        letter-spacing: 0.03em;
       }
       .footer-col ul li:hover {
         color: var(--clay);
@@ -845,26 +1719,7 @@
         color: var(--clay);
       }
 
-      .bundle-includes {
-        font-size: 10px;
-        color: var(--clay);
-        letter-spacing: 0.05em;
-        margin-bottom: 12px;
-        font-style: italic;
-      }
-      .price-was {
-        font-size: 12px;
-        color: var(--light-mid);
-        text-decoration: line-through;
-        margin-left: 8px;
-        letter-spacing: 0.03em;
-      }
-      .bundle-btn {
-        background: var(--terracotta);
-      }
-      .bundle-btn:hover {
-        background: var(--clay);
-      }
+      /* ─── ANIMATIONS ─── */
       .fade-up {
         opacity: 0;
         transform: translateY(28px);
@@ -887,16 +1742,36 @@
         }
       }
 
-      @media (max-width: 768px) {
+      /* ─── TOAST ─── */
+      .toast {
+        position: fixed;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: var(--deep);
+        color: var(--warm-white);
+        padding: 14px 28px;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        z-index: 500;
+        opacity: 0;
+        transition: all 0.4s;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* ─── MOBILE ─── */
+      @media (max-width: 900px) {
         nav {
-          padding: 16px 20px;
+          padding: 14px 20px;
         }
         .nav-links {
           display: none;
-        }
-        .nav-cart {
-          padding: 8px 14px;
-          font-size: 9px;
         }
         .hamburger {
           display: flex;
@@ -918,68 +1793,45 @@
           font-size: clamp(44px, 13vw, 68px);
         }
         .hero-sub {
-          font-size: 13px;
-          margin-bottom: 32px;
           max-width: 100%;
+          margin-bottom: 32px;
         }
         .hero-cta-row {
           flex-direction: column;
           align-items: stretch;
           gap: 14px;
         }
-        .btn-primary {
+        .btn-primary,
+        .btn-outline {
           text-align: center;
-          padding: 15px 22px;
         }
         .hero-right {
           order: 1;
-          height: 52vw;
-          min-height: 200px;
-        }
-        .hero-visual {
-          padding: 26px;
+          height: 55vw;
+          min-height: 220px;
         }
         .hero-scroll {
           display: none;
         }
-        .section-header {
-          padding: 52px 22px 32px;
+        .featured-section,
+        .collection-grid-section,
+        .bundle-detail-section,
+        .about-content {
+          padding: 48px 22px;
         }
-        .gender-tabs {
-          margin: 0 22px 0;
+        .featured-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
         }
-        .gender-tab {
-          padding: 12px 20px;
-          font-size: 10px;
-        }
-        .products-grid {
+        .featured-grid,
+        .products-grid,
+        .bundles-grid {
           grid-template-columns: 1fr 1fr;
           gap: 2px;
-          padding: 24px 0 56px;
         }
-        .product-card.featured {
+        .featured-card.large {
           grid-column: span 2;
-        }
-        .product-card.featured .product-visual {
-          aspect-ratio: 4/3;
-        }
-        .product-overlay {
-          background: rgba(44, 37, 32, 0.1);
-        }
-        .product-overlay-btn {
-          opacity: 1;
-          transform: none;
-          font-size: 8px;
-          padding: 9px 14px;
-        }
-        .product-info {
-          padding: 12px 14px 18px;
-        }
-        .product-name {
-          font-size: 16px;
-        }
-        .product-desc {
-          font-size: 10px;
         }
         .brand-strip {
           grid-template-columns: 1fr;
@@ -987,47 +1839,43 @@
         .brand-strip-item {
           border-right: none;
           border-bottom: 1px solid rgba(196, 168, 130, 0.3);
-          padding: 32px 22px;
         }
-        .brand-strip-item:last-child {
-          border-bottom: none;
-        }
-        .editorial {
+        .editorial,
+        .pdp-grid,
+        .bundle-detail,
+        .about-quince {
           grid-template-columns: 1fr;
-          margin: 0;
         }
-        .editorial-visual {
-          min-height: 220px;
-          padding: 32px 22px;
-        }
-        .editorial-visual-content p {
-          font-size: 32px;
-        }
-        .editorial-content {
+        .editorial-content,
+        .pdp-info,
+        .bundle-detail-content {
           padding: 40px 22px;
         }
-        .editorial-content h2 {
-          font-size: 26px;
+        .bundle-detail:nth-child(even) {
+          direction: ltr;
         }
+        .bundle-detail-img,
+        .pdp-main-img {
+          height: 280px;
+        }
+        .bundles-section,
         .newsletter {
-          padding: 52px 22px;
+          padding: 56px 22px;
         }
-        .newsletter h2 {
-          font-size: 28px;
+        .bundles-grid {
+          grid-template-columns: 1fr;
         }
-        .newsletter-form {
-          flex-direction: column;
+        .collection-hero,
+        .bundles-page-hero,
+        .about-hero {
+          height: 40vh;
         }
-        .newsletter-input {
-          border-right: 1px solid rgba(196, 168, 130, 0.3);
-          border-bottom: none;
+        .about-values {
+          grid-template-columns: 1fr;
         }
-        .newsletter-btn {
-          width: 100%;
-          padding: 15px;
-        }
-        footer {
-          padding: 44px 22px 26px;
+        .about-hero-text {
+          left: 22px;
+          bottom: 32px;
         }
         .footer-top {
           grid-template-columns: 1fr 1fr;
@@ -1041,19 +1889,34 @@
           gap: 12px;
           text-align: center;
         }
+        footer {
+          padding: 44px 22px 26px;
+        }
+        .cart-drawer {
+          width: 100vw;
+        }
+        .newsletter-form {
+          flex-direction: column;
+        }
+        .newsletter-input {
+          border-right: 1px solid rgba(196, 168, 130, 0.3);
+          border-bottom: none;
+        }
+        .newsletter-btn {
+          width: 100%;
+          padding: 15px;
+        }
       }
-      @media (max-width: 480px) {
+      @media (max-width: 520px) {
+        .featured-grid,
         .products-grid {
           grid-template-columns: 1fr;
         }
-        .product-card.featured {
+        .featured-card.large {
           grid-column: span 1;
         }
-        .product-card.featured .product-visual {
-          aspect-ratio: 3/4;
-        }
       }
-      @media (min-width: 769px) {
+      @media (min-width: 901px) {
         .hamburger {
           display: none;
         }
@@ -1064,11 +1927,55 @@
     </style>
   </head>
   <body>
+    <!-- ─── TOAST ─── -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ─── CART ─── -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+      <div class="cart-header">
+        <span class="cart-title">Your Bag</span>
+        <button class="cart-close" onclick="closeCart()">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty">
+          Your bag is empty.<br /><br />
+          <button
+            class="btn-ghost"
+            onclick="
+              closeCart();
+              showPage('women');
+            "
+          >
+            Start Shopping
+          </button>
+        </div>
+      </div>
+      <div class="cart-footer" id="cartFooter" style="display: none">
+        <div class="cart-subtotal">
+          <span class="cart-subtotal-label">Subtotal</span>
+          <span class="cart-subtotal-amount" id="cartTotal">$0</span>
+        </div>
+        <button
+          class="cart-checkout"
+          onclick="
+            showToast('Checkout coming soon — Shopify integration in progress!')
+          "
+        >
+          Proceed to Checkout
+        </button>
+        <button class="cart-continue" onclick="closeCart()">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── NAV ─── -->
     <nav id="mainNav">
-      <div class="nav-logo" onclick="scrollToTop()">
+      <div class="nav-logo" onclick="showPage('home')">
         <svg
-          width="180"
-          height="42"
+          width="160"
+          height="38"
           viewBox="0 0 260 60"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -1101,7 +2008,7 @@
             x="130"
             y="50"
             text-anchor="middle"
-            font-family="'Cormorant Garamond', serif"
+            font-family="'Cormorant Garamond',serif"
             font-weight="300"
             font-size="36"
             fill="#2C2520"
@@ -1112,13 +2019,19 @@
         </svg>
       </div>
       <ul class="nav-links">
-        <li><a onclick="showGender('women')">Women</a></li>
-        <li><a onclick="showGender('men')">Men</a></li>
-        <li><a href="#collection">Collections</a></li>
-        <li><a href="#about">About</a></li>
+        <li><a onclick="showPage('women')" id="nav-women">Women</a></li>
+        <li><a onclick="showPage('men')" id="nav-men">Men</a></li>
+        <li><a onclick="showPage('bundles')" id="nav-bundles">The Looks</a></li>
+        <li><a onclick="showPage('about')" id="nav-about">About</a></li>
       </ul>
-      <div class="nav-actions">
-        <button class="nav-cart">Bag (0)</button>
+      <div class="nav-right">
+        <button class="nav-search" onclick="showToast('Search coming soon!')">
+          Search
+        </button>
+        <button class="nav-cart-btn" onclick="openCart()">
+          Bag
+          <span class="cart-count" id="cartCount" style="display: none">0</span>
+        </button>
         <div
           class="hamburger"
           onclick="document.getElementById('mobileMenu').classList.add('open')"
@@ -1128,6 +2041,7 @@
       </div>
     </nav>
 
+    <!-- ─── MOBILE MENU ─── -->
     <div class="mobile-menu" id="mobileMenu">
       <button
         class="mobile-menu-close"
@@ -1137,890 +2051,2312 @@
       </button>
       <a
         onclick="
-          showGender('women');
+          showPage('women');
           document.getElementById('mobileMenu').classList.remove('open');
         "
         >Women</a
       >
       <a
         onclick="
-          showGender('men');
+          showPage('men');
           document.getElementById('mobileMenu').classList.remove('open');
         "
         >Men</a
       >
       <a
-        href="#collection"
-        onclick="document.getElementById('mobileMenu').classList.remove('open')"
-        >Collections</a
+        onclick="
+          showPage('bundles');
+          document.getElementById('mobileMenu').classList.remove('open');
+        "
+        >The Looks</a
       >
       <a
-        href="#about"
-        onclick="document.getElementById('mobileMenu').classList.remove('open')"
+        onclick="
+          showPage('about');
+          document.getElementById('mobileMenu').classList.remove('open');
+        "
         >About</a
       >
     </div>
 
-    <section class="hero">
-      <div class="hero-left">
-        <p class="hero-eyebrow">Launch Collection — 2026</p>
-        <h1 class="hero-title">Dressed<br />for the<br /><em>journey.</em></h1>
-        <p class="hero-sub">
-          Six essential pieces. European linen, Mongolian cashmere, washable
-          silk. Everything you need to move through the world with effortless
-          style.
-        </p>
-        <div class="hero-cta-row">
-          <a href="#collection" class="btn-primary">Shop the Launch</a>
-          <a href="#about" class="btn-ghost">Our Story</a>
+    <!-- ══════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════ -->
+    <div class="page active" id="page-home">
+      <section class="hero">
+        <div class="hero-left">
+          <p class="hero-eyebrow">Launch Collection — 2026</p>
+          <h1 class="hero-title">
+            Dressed<br />for the<br /><em>journey.</em>
+          </h1>
+          <p class="hero-sub">
+            Six essential pieces in European linen, Mongolian cashmere, and
+            washable silk. Everything you need to move through the world with
+            effortless style.
+          </p>
+          <div class="hero-cta-row">
+            <button class="btn-primary" onclick="showPage('women')">
+              Shop Women
+            </button>
+            <button class="btn-outline" onclick="showPage('men')">
+              Shop Men
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="hero-right">
-        <div class="hero-visual">
-          <div class="hero-visual-text"><p>"The art of arriving well."</p></div>
+        <div class="hero-right">
+          <img
+            class="hero-img"
+            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=85&fit=crop"
+            alt="Arluco lifestyle"
+            loading="eager"
+            onerror="
+              this.style.background = 'linear-gradient(160deg,#D4C4B0,#B8765A)'
+            "
+          />
+          <div class="hero-img-overlay"></div>
+          <div class="hero-caption"><p>"The art of arriving well."</p></div>
         </div>
-      </div>
-      <div class="hero-scroll">
-        <div class="hero-scroll-line"></div>
-        <span>Scroll</span>
-      </div>
-    </section>
+        <div class="hero-scroll">
+          <div class="hero-scroll-line"></div>
+          <span>Scroll</span>
+        </div>
+      </section>
 
-    <div class="marquee-strip">
-      <div class="marquee-content">
-        <span class="marquee-item">100% European Linen</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Mongolian Cashmere</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Washable Silk</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Launch Collection 2026</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Free Returns</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Six Essential Pieces</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">100% European Linen</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Mongolian Cashmere</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Washable Silk</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Launch Collection 2026</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Free Returns</span
-        ><span class="marquee-dot">✦</span>
-        <span class="marquee-item">Six Essential Pieces</span
-        ><span class="marquee-dot">✦</span>
-      </div>
-    </div>
-
-    <section id="collection" class="collection-section">
-      <div class="section-header">
-        <p class="section-eyebrow">Launch Collection — 2026</p>
-        <h2 class="section-title">Six <em>Essential</em> Pieces</h2>
-        <p class="section-sub">
-          Curated for how you actually travel. Nothing superfluous. Everything
-          necessary.
-        </p>
-      </div>
-
-      <div class="gender-tabs">
-        <div
-          class="gender-tab active"
-          id="tab-women"
-          onclick="showGender('women')"
-        >
-          Women
-        </div>
-        <div class="gender-tab" id="tab-men" onclick="showGender('men')">
-          Men
-        </div>
-        <div
-          class="gender-tab"
-          id="tab-bundles"
-          onclick="showGender('bundles')"
-        >
-          The Looks
+      <div class="marquee-strip">
+        <div class="marquee-content">
+          <span class="marquee-item">100% European Linen</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Mongolian Cashmere</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Washable Silk</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Launch Collection 2026</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Free Returns</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Six Essential Pieces</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">100% European Linen</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Mongolian Cashmere</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Washable Silk</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Launch Collection 2026</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Free Returns</span
+          ><span class="marquee-dot">✦</span>
+          <span class="marquee-item">Six Essential Pieces</span
+          ><span class="marquee-dot">✦</span>
         </div>
       </div>
 
-      <div class="products-grid" id="productsGrid">
-        <!-- ══════════════ BUNDLES ══════════════ -->
-
-        <!-- BUNDLE 1: Women's Silk Evening Set — FEATURED -->
-        <div
-          class="product-card featured fade-up bundle-card"
-          data-gender="bundles"
-          style="display: none"
-        >
-          <div class="product-visual">
-            <div
-              class="product-img-placeholder"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  #1c2535 0%,
-                  #8b6f5c 60%,
-                  #c4a882 100%
-                );
-              "
-            >
-              <span class="product-icon" style="font-size: 72px; opacity: 0.18"
-                >👗✨</span
-              >
-            </div>
-            <span class="product-tag" style="background: #2c2520"
-              >Save $48</span
-            >
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Add Both to Bag</button>
-            </div>
+      <section class="featured-section">
+        <div class="featured-header">
+          <div>
+            <p class="section-eyebrow">The Collection</p>
+            <h2 class="section-title">Six <em>Essential</em> Pieces</h2>
           </div>
-          <div class="product-info">
-            <p class="product-category">Women · The Complete Look</p>
-            <h3 class="product-name">The Riviera Evening Set</h3>
-            <p class="product-desc">
-              The Riviera Silk Maxi Dress + Solera Cashmere Crewneck. Silk to
-              the floor, cashmere draped over your shoulders — the complete
-              evening look that travels as beautifully as it wears.
-            </p>
-            <p class="bundle-includes">
-              Includes: Riviera Silk Maxi Dress + Solera Cashmere Crewneck
-            </p>
-            <p class="size-label">Dress Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <p class="size-label" style="margin-top: 10px">Crewneck Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row" style="margin-top: 14px">
-              <div>
-                <span class="product-price">$425</span>
-                <span class="price-was">$473</span>
-              </div>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #1c2535"
-                  title="Navy Dress"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #2c2520"
-                  title="Black Dress"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #c0c0c0"
-                  title="Grey Crewneck"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart bundle-btn">Add the Look — $425</button>
-          </div>
+          <button class="btn-ghost" onclick="showPage('women')">
+            View All
+          </button>
         </div>
-
-        <!-- BUNDLE 2: Men's Linen Travel Suit -->
-        <div
-          class="product-card fade-up bundle-card"
-          data-gender="bundles"
-          style="display: none"
-        >
-          <div class="product-visual">
-            <div
-              class="product-img-placeholder"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  #d4c4a0 0%,
-                  #8a7a5a 60%,
-                  #2c2520 100%
-                );
-              "
-            >
-              <span class="product-icon" style="opacity: 0.18">🧥</span>
-            </div>
-            <span class="product-tag" style="background: #2c2520"
-              >Save $37</span
-            >
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Add Both to Bag</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Men · The Complete Look</p>
-            <h3 class="product-name">The Linen Travel Suit</h3>
-            <p class="product-desc">
-              The Lorca Linen Chore Jacket + Escala Linen Trousers. A full linen
-              suit under $330. Tailored enough for dinner, relaxed enough for
-              the cobblestone walk there.
-            </p>
-            <p class="bundle-includes">
-              Includes: Lorca Linen Chore Jacket + Escala Linen Trousers
-            </p>
-            <p class="size-label">Jacket Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <p class="size-label" style="margin-top: 10px">Trouser Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row" style="margin-top: 14px">
-              <div>
-                <span class="product-price">$329</span>
-                <span class="price-was">$366</span>
-              </div>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #d4c4a0"
-                  title="Flax"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #1c2535"
-                  title="Navy"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart bundle-btn">Add the Look — $329</button>
-          </div>
-        </div>
-
-        <!-- BUNDLE 3: Men's Full Travel Look (3 pieces) -->
-        <div
-          class="product-card fade-up bundle-card"
-          data-gender="bundles"
-          style="display: none"
-        >
-          <div class="product-visual">
-            <div
-              class="product-img-placeholder"
-              style="
-                background: linear-gradient(135deg, #c4a882 0%, #6b5b4e 100%);
-              "
-            >
-              <span class="product-icon" style="opacity: 0.18">✈️</span>
-            </div>
-            <span class="product-tag" style="background: #b8765a"
-              >Best Value</span
-            >
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Add All to Bag</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Men · The Complete Wardrobe</p>
-            <h3 class="product-name">The Arluco Travel Kit</h3>
-            <p class="product-desc">
-              Lorca Jacket + Escala Trousers + Calma Camp Shirt. Everything you
-              need for a week away. Three pieces, infinite combinations, one
-              carry-on.
-            </p>
-            <p class="bundle-includes">
-              Includes: Lorca Jacket + Escala Trousers + Calma Camp Shirt
-            </p>
-            <p class="size-label">Size (all pieces)</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row" style="margin-top: 14px">
-              <div>
-                <span class="product-price">$449</span>
-                <span class="price-was">$494</span>
-              </div>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #d4c4a0"
-                  title="Flax"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #1c2535"
-                  title="Navy"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart bundle-btn">Add the Look — $449</button>
-          </div>
-        </div>
-        <div class="product-card featured fade-up" data-gender="women">
-          <div class="product-visual">
-            <div class="product-img-placeholder p6">
-              <span class="product-icon">👗</span>
-            </div>
-            <span class="product-tag">Hero Piece</span>
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Quick View</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Women · Silk</p>
-            <h3 class="product-name">Riviera Silk Maxi Dress</h3>
-            <p class="product-desc">
-              Washable stretch silk in a fluid tiered maxi. The dress that makes
-              you look like you've been traveling in style your whole life.
-              Steps off the plane looking perfect.
-            </p>
-            <p class="size-label">Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row">
-              <span class="product-price">$325</span>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #1c2535"
-                  title="Navy"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #2c2520"
-                  title="Black"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart">Add to Bag</button>
-          </div>
-        </div>
-
-        <!-- WOMEN: Solera Cashmere Crewneck -->
-        <div class="product-card fade-up" data-gender="women">
-          <div class="product-visual">
-            <div class="product-img-placeholder p5">
-              <span class="product-icon">☁️</span>
-            </div>
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Quick View</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Women · Cashmere</p>
-            <h3 class="product-name">Solera Cashmere Crewneck</h3>
-            <p class="product-desc">
-              Mongolian cashmere in a relaxed crewneck. The sweater that makes
-              every destination feel like home. 4.9 stars.
-            </p>
-            <p class="size-label">Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row">
-              <span class="product-price">$148</span>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #c0c0c0"
-                  title="Heather Grey"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #1c2535"
-                  title="True Navy"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart">Add to Bag</button>
-          </div>
-        </div>
-
-        <!-- MEN: Lorca Linen Chore Jacket FEATURED -->
-        <div
-          class="product-card featured fade-up"
-          data-gender="men"
-          style="display: none"
-        >
-          <div class="product-visual">
-            <div class="product-img-placeholder p1">
-              <span class="product-icon">🧥</span>
-            </div>
-            <span class="product-tag">Hero Piece</span>
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Quick View</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Men · Outerwear</p>
-            <h3 class="product-name">The Lorca Linen Chore Jacket</h3>
-            <p class="product-desc">
-              100% European linen. Four oversized pockets, relaxed fit,
-              structured enough for dinner. Your most-reached-for layer from
-              Lisbon to Los Angeles. Best seller, 4.8 stars.
-            </p>
-            <p class="size-label">Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row">
-              <span class="product-price">$198</span>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #d4c4a0"
-                  title="Flax"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #1c2535"
-                  title="Navy"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart">Add to Bag</button>
-          </div>
-        </div>
-
-        <!-- MEN: Calma Camp Collar Shirt -->
-        <div
-          class="product-card fade-up"
-          data-gender="men"
-          style="display: none"
-        >
-          <div class="product-visual">
-            <div class="product-img-placeholder p2">
-              <span class="product-icon">🌴</span>
-            </div>
-            <span class="product-tag">Best Seller</span>
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Quick View</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Men · Shirts</p>
-            <h3 class="product-name">Calma Camp Collar Shirt</h3>
-            <p class="product-desc">
-              European linen camp collar — the definitive warm-weather shirt.
-              Open collar, relaxed body, refined details. 4.9 stars.
-            </p>
-            <p class="size-label">Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row">
-              <span class="product-price">$128</span>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #d4c4a0"
-                  title="Flax"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #f5f0e8"
-                  title="White"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart">Add to Bag</button>
-          </div>
-        </div>
-
-        <!-- MEN: Brisa Long Sleeve Linen -->
-        <div
-          class="product-card fade-up"
-          data-gender="men"
-          style="display: none"
-        >
-          <div class="product-visual">
-            <div class="product-img-placeholder p3">
-              <span class="product-icon">👔</span>
-            </div>
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Quick View</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Men · Shirts</p>
-            <h3 class="product-name">Brisa Long Sleeve Linen</h3>
-            <p class="product-desc">
-              100% European linen in a relaxed, slightly oversized cut.
-              Wrinkle-resistant and endlessly packable. The shirt you'll reach
-              for every single trip.
-            </p>
-            <p class="size-label">Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row">
-              <span class="product-price">$128</span>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #f5f0e8"
-                  title="White"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #7a9098"
-                  title="Chambray Blue"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart">Add to Bag</button>
-          </div>
-        </div>
-
-        <!-- MEN: Escala Linen Trousers -->
-        <div
-          class="product-card fade-up"
-          data-gender="men"
-          style="display: none"
-        >
-          <div class="product-visual">
-            <div class="product-img-placeholder p4">
-              <span class="product-icon">👖</span>
-            </div>
-            <span class="product-tag">New Arrival</span>
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Quick View</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Men · Bottoms</p>
-            <h3 class="product-name">Escala Linen Trousers</h3>
-            <p class="product-desc">
-              100% European linen in a tailored straight leg. Pairs with the
-              Lorca jacket as a full travel suit. 4.9 stars.
-            </p>
-            <p class="size-label">Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row">
-              <span class="product-price">$168</span>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #d4c4a0"
-                  title="Flax"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #1c2535"
-                  title="Navy"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart">Add to Bag</button>
-          </div>
-        </div>
-
-        <!-- MEN: Solera Cashmere Crewneck -->
-        <div
-          class="product-card fade-up"
-          data-gender="men"
-          style="display: none"
-        >
-          <div class="product-visual">
-            <div class="product-img-placeholder p5">
-              <span class="product-icon">☁️</span>
-            </div>
-            <span class="product-tag">Best Seller</span>
-            <div class="product-overlay">
-              <button class="product-overlay-btn">Quick View</button>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-category">Men · Cashmere</p>
-            <h3 class="product-name">Solera Cashmere Crewneck</h3>
-            <p class="product-desc">
-              Mongolian cashmere in a classic crewneck. The sweater that makes
-              every destination feel like home. 4.9 stars.
-            </p>
-            <p class="size-label">Size</p>
-            <div class="size-row">
-              <button class="size-btn">S</button
-              ><button class="size-btn">M</button>
-              <button class="size-btn">L</button
-              ><button class="size-btn">XL</button
-              ><button class="size-btn">XXL</button>
-            </div>
-            <div class="product-price-row">
-              <span class="product-price">$148</span>
-              <div class="product-colors">
-                <div
-                  class="color-dot"
-                  style="background: #c0c0c0"
-                  title="Heather Grey"
-                ></div>
-                <div
-                  class="color-dot"
-                  style="background: #1c2535"
-                  title="True Navy"
-                ></div>
-              </div>
-            </div>
-            <button class="add-to-cart">Add to Bag</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="brand-strip">
-      <div class="brand-strip-item fade-up">
-        <span class="strip-icon">✦</span>
-        <h3 class="strip-title">Wrinkle-Resistant Fabrics</h3>
-        <p class="strip-desc">
-          Every piece is engineered to look fresh off the plane, not through it.
-        </p>
-      </div>
-      <div class="brand-strip-item fade-up">
-        <span class="strip-icon">◈</span>
-        <h3 class="strip-title">Packable by Design</h3>
-        <p class="strip-desc">
-          Thoughtful construction means everything folds down to nearly nothing.
-        </p>
-      </div>
-      <div class="brand-strip-item fade-up">
-        <span class="strip-icon">◇</span>
-        <h3 class="strip-title">Elevated, Not Precious</h3>
-        <p class="strip-desc">
-          Looks refined. Wears like a second skin. Handles the actual world.
-        </p>
-      </div>
-    </div>
-
-    <section class="editorial" id="about">
-      <div class="editorial-visual">
-        <div class="editorial-visual-content">
-          <p>"Wear the<br />world<br />lightly."</p>
-        </div>
-      </div>
-      <div class="editorial-content">
-        <p class="section-eyebrow">The Arluco Philosophy</p>
-        <h2>
-          Clothing that lives where you do — between here and somewhere
-          beautiful.
-        </h2>
-        <p>
-          We started Arluco with one belief: that travel clothes shouldn't look
-          like travel clothes. You deserve the same quality and refinement
-          whether you're at home or ten time zones away.
-        </p>
-        <p>
-          Every piece in our collection is chosen for how it moves through the
-          world — packable, breathable, wrinkle-resistant — without sacrificing
-          an ounce of elegance.
-        </p>
-        <a href="#collection" class="btn-primary" style="margin-top: 16px"
-          >Shop the Collection</a
-        >
-      </div>
-    </section>
-
-    <section class="newsletter">
-      <p class="section-eyebrow">Stay in the Loop</p>
-      <h2>Dress for where you're <em>going.</em></h2>
-      <p>New arrivals, travel stories, and early access for members.</p>
-      <div class="newsletter-form">
-        <input
-          type="email"
-          class="newsletter-input"
-          placeholder="Your email address"
-        />
-        <button class="newsletter-btn">Join</button>
-      </div>
-    </section>
-
-    <footer>
-      <div class="footer-top">
-        <div class="footer-brand">
-          <svg
-            width="180"
-            height="42"
-            viewBox="0 0 260 60"
-            xmlns="http://www.w3.org/2000/svg"
-            style="margin-bottom: 18px; display: block"
+        <div class="featured-grid">
+          <!-- Large featured: Silk Maxi Dress -->
+          <div
+            class="featured-card large fade-up"
+            onclick="showProduct('silk-dress')"
           >
-            <line
-              x1="0"
-              y1="10"
-              x2="82"
-              y2="10"
-              stroke="#C4A882"
-              stroke-width="0.5"
-              opacity="0.5"
+            <img
+              class="feat-img"
+              src="https://images.unsplash.com/photo-1583496661160-fb5218b5f4b6?w=1400&q=85&fit=crop&crop=top"
+              alt="Riviera Silk Maxi Dress"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#1C2535,#8B6F5C)'
+              "
             />
-            <line
-              x1="178"
-              y1="10"
-              x2="260"
-              y2="10"
-              stroke="#C4A882"
-              stroke-width="0.5"
-              opacity="0.5"
+            <div class="feat-overlay"></div>
+            <div class="feat-info">
+              <p class="feat-tag">Women · Silk</p>
+              <p class="feat-name">Riviera Silk Maxi Dress</p>
+              <p class="feat-price">$325</p>
+              <span class="feat-cta">Shop Now →</span>
+            </div>
+          </div>
+          <!-- Chore Jacket -->
+          <div
+            class="featured-card fade-up"
+            onclick="showProduct('chore-jacket')"
+          >
+            <img
+              class="feat-img"
+              src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&q=85&fit=crop"
+              alt="Lorca Linen Chore Jacket"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#D4C4A0,#8A7A5A)'
+              "
             />
-            <polygon
-              points="130,4 134.5,10 130,16 125.5,10"
-              fill="none"
-              stroke="#B8765A"
-              stroke-width="1.1"
+            <div class="feat-overlay"></div>
+            <div class="feat-info">
+              <p class="feat-tag">Men · Outerwear</p>
+              <p class="feat-name">Lorca Linen Chore Jacket</p>
+              <p class="feat-price">$198</p>
+              <span class="feat-cta">Shop Now →</span>
+            </div>
+          </div>
+          <!-- Camp Shirt -->
+          <div
+            class="featured-card fade-up"
+            onclick="showProduct('camp-shirt')"
+          >
+            <img
+              class="feat-img"
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=85&fit=crop"
+              alt="Calma Camp Collar Shirt"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#C8D4C0,#8A9E80)'
+              "
             />
-            <circle cx="130" cy="10" r="1.5" fill="#B8765A" />
-            <text
-              x="130"
-              y="50"
-              text-anchor="middle"
-              font-family="'Cormorant Garamond', serif"
-              font-weight="300"
-              font-size="36"
-              fill="#FAF8F4"
-              letter-spacing="10"
-            >
-              ARLUCO
-            </text>
-          </svg>
-          <p>
-            Elevated travel clothing for the world in motion. Designed for those
-            who move through life with intention and style.
+            <div class="feat-overlay"></div>
+            <div class="feat-info">
+              <p class="feat-tag">Men · Shirts</p>
+              <p class="feat-name">Calma Camp Collar Shirt</p>
+              <p class="feat-price">$128</p>
+              <span class="feat-cta">Shop Now →</span>
+            </div>
+          </div>
+          <!-- Cashmere Crewneck -->
+          <div
+            class="featured-card fade-up"
+            onclick="showProduct('cashmere-w')"
+          >
+            <img
+              class="feat-img"
+              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85&fit=crop"
+              alt="Solera Cashmere Crewneck"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#C8C4B8,#7A7060)'
+              "
+            />
+            <div class="feat-overlay"></div>
+            <div class="feat-info">
+              <p class="feat-tag">Women · Cashmere</p>
+              <p class="feat-name">Solera Cashmere Crewneck</p>
+              <p class="feat-price">$148</p>
+              <span class="feat-cta">Shop Now →</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="brand-strip">
+        <div class="brand-strip-item fade-up">
+          <span class="strip-icon">✦</span>
+          <h3 class="strip-title">Wrinkle-Resistant</h3>
+          <p class="strip-desc">
+            Every piece is engineered to look fresh off the plane, not through
+            it.
           </p>
         </div>
-        <div class="footer-col">
-          <h4>Shop</h4>
-          <ul>
-            <li onclick="showGender('women')">Women</li>
-            <li onclick="showGender('men')">Men</li>
-            <li>New Arrivals</li>
-            <li>Best Sellers</li>
-          </ul>
+        <div class="brand-strip-item fade-up">
+          <span class="strip-icon">◈</span>
+          <h3 class="strip-title">Packable by Design</h3>
+          <p class="strip-desc">
+            Everything folds down to nearly nothing. One carry-on. Every
+            destination.
+          </p>
         </div>
-        <div class="footer-col">
-          <h4>Help</h4>
-          <ul>
-            <li>Sizing Guide</li>
-            <li>Shipping</li>
-            <li>Returns</li>
-            <li>Contact Us</li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li>Our Story</li>
-            <li>Journal</li>
-            <li>Sustainability</li>
-            <li>Press</li>
-          </ul>
+        <div class="brand-strip-item fade-up">
+          <span class="strip-icon">◇</span>
+          <h3 class="strip-title">Elevated, Not Precious</h3>
+          <p class="strip-desc">
+            Looks refined. Wears like a second skin. Handles the actual world.
+          </p>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>© 2026 Arluco. All rights reserved.</p>
-        <div class="footer-social">
-          <span>TikTok</span><span>Instagram</span><span>Pinterest</span>
+
+      <div class="editorial">
+        <img
+          class="editorial-img"
+          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1000&q=85&fit=crop"
+          alt="Travel editorial"
+          onerror="
+            this.style.background = 'linear-gradient(150deg,#8B6F5C,#5C3D2E)'
+          "
+        />
+        <div class="editorial-content">
+          <p class="section-eyebrow">The Arluco Philosophy</p>
+          <h2>
+            Clothing that lives where you do — between here and somewhere
+            beautiful.
+          </h2>
+          <p>
+            We started Arluco with one belief: that travel clothes shouldn't
+            look like travel clothes. You deserve the same quality and
+            refinement whether you're at home or ten time zones away.
+          </p>
+          <p>
+            Every piece is chosen for how it moves through the world — packable,
+            breathable, wrinkle-resistant — without sacrificing an ounce of
+            elegance.
+          </p>
+          <button
+            class="btn-primary"
+            onclick="showPage('about')"
+            style="margin-top: 16px"
+          >
+            Read Our Story
+          </button>
         </div>
       </div>
-    </footer>
+
+      <section class="bundles-section">
+        <div style="text-align: center; margin-bottom: 48px">
+          <p class="section-eyebrow" style="color: var(--clay)">The Looks</p>
+          <h2 class="section-title" style="color: var(--warm-white)">
+            Complete <em>Outfits,</em><br />One Click
+          </h2>
+          <p
+            class="section-sub"
+            style="color: rgba(250, 248, 244, 0.5); margin-top: 12px"
+          >
+            Curated pairings at a discount. Because the best looks are
+            effortless.
+          </p>
+        </div>
+        <div class="bundles-grid">
+          <div class="bundle-card fade-up" onclick="showPage('bundles')">
+            <img
+              class="bundle-img"
+              src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800&q=85&fit=crop"
+              alt="Riviera Evening Set"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#1C2535,#C4A882)'
+              "
+            />
+            <div class="bundle-overlay"></div>
+            <div class="bundle-info">
+              <p class="bundle-name">The Riviera Evening Set</p>
+              <div class="bundle-price-row">
+                <span class="bundle-price">$425</span>
+                <span class="bundle-was">$473</span>
+                <span class="bundle-save">Save $48</span>
+              </div>
+            </div>
+          </div>
+          <div class="bundle-card fade-up" onclick="showPage('bundles')">
+            <img
+              class="bundle-img"
+              src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=800&q=85&fit=crop"
+              alt="Linen Travel Suit"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#D4C4A0,#2C2520)'
+              "
+            />
+            <div class="bundle-overlay"></div>
+            <div class="bundle-info">
+              <p class="bundle-name">The Linen Travel Suit</p>
+              <div class="bundle-price-row">
+                <span class="bundle-price">$329</span>
+                <span class="bundle-was">$366</span>
+                <span class="bundle-save">Save $37</span>
+              </div>
+            </div>
+          </div>
+          <div class="bundle-card fade-up" onclick="showPage('bundles')">
+            <img
+              class="bundle-img"
+              src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800&q=85&fit=crop"
+              alt="Arluco Travel Kit"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#C4A882,#6B5B4E)'
+              "
+            />
+            <div class="bundle-overlay"></div>
+            <div class="bundle-info">
+              <p class="bundle-name">The Arluco Travel Kit</p>
+              <div class="bundle-price-row">
+                <span class="bundle-price">$449</span>
+                <span class="bundle-was">$494</span>
+                <span class="bundle-save">Save $45</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 40px">
+          <button
+            class="btn-outline"
+            style="
+              color: var(--warm-white);
+              border-color: rgba(250, 248, 244, 0.4);
+            "
+            onmouseover="
+              this.style.background = 'var(--warm-white)';
+              this.style.color = 'var(--deep)';
+            "
+            onmouseout="
+              this.style.background = 'transparent';
+              this.style.color = 'var(--warm-white)';
+            "
+            onclick="showPage('bundles')"
+          >
+            View All Looks
+          </button>
+        </div>
+      </section>
+
+      <section class="newsletter">
+        <p class="section-eyebrow" style="color: var(--clay)">
+          Stay in the Loop
+        </p>
+        <h2>Dress for where you're <em>going.</em></h2>
+        <p>
+          New arrivals, travel stories, and early access — straight to your
+          inbox.
+        </p>
+        <div class="newsletter-form">
+          <input
+            type="email"
+            class="newsletter-input"
+            placeholder="Your email address"
+          />
+          <button
+            class="newsletter-btn"
+            onclick="showToast('Thank you! You\'re on the list.')"
+          >
+            Join
+          </button>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand">
+            <svg
+              width="140"
+              height="32"
+              viewBox="0 0 260 60"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                x1="0"
+                y1="10"
+                x2="82"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <line
+                x1="178"
+                y1="10"
+                x2="260"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <polygon
+                points="130,4 134.5,10 130,16 125.5,10"
+                fill="none"
+                stroke="#B8765A"
+                stroke-width="1.1"
+              />
+              <circle cx="130" cy="10" r="1.5" fill="#B8765A" />
+              <text
+                x="130"
+                y="50"
+                text-anchor="middle"
+                font-family="'Cormorant Garamond',serif"
+                font-weight="300"
+                font-size="36"
+                fill="#FAF8F4"
+                letter-spacing="10"
+              >
+                ARLUCO
+              </text>
+            </svg>
+            <p>
+              Elevated travel clothing for the world in motion. Designed for
+              those who move through life with intention.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h4>Shop</h4>
+            <ul>
+              <li onclick="showPage('women')">Women</li>
+              <li onclick="showPage('men')">Men</li>
+              <li onclick="showPage('bundles')">The Looks</li>
+              <li onclick="showPage('women')">New Arrivals</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Help</h4>
+            <ul>
+              <li onclick="showToast('Sizing guide coming soon!')">
+                Sizing Guide
+              </li>
+              <li onclick="showToast('Ships in 2–3 weeks after order')">
+                Shipping
+              </li>
+              <li onclick="showToast('Free returns within 30 days')">
+                Returns
+              </li>
+              <li onclick="showToast('Email us: hello@arluco.co')">
+                Contact Us
+              </li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li onclick="showPage('about')">Our Story</li>
+              <li onclick="showToast('Journal coming soon!')">Journal</li>
+              <li onclick="showPage('about')">Sustainability</li>
+              <li onclick="showToast('Press inquiries: press@arluco.co')">
+                Press
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Arluco. All rights reserved.</p>
+          <div class="footer-social">
+            <span onclick="showToast('@arluco on TikTok — coming soon!')"
+              >TikTok</span
+            >
+            <span onclick="showToast('@arluco on Instagram — coming soon!')"
+              >Instagram</span
+            >
+            <span onclick="showToast('@arluco on Pinterest — coming soon!')"
+              >Pinterest</span
+            >
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE: WOMEN
+══════════════════════════════════════════ -->
+    <div class="page" id="page-women">
+      <div class="collection-hero">
+        <img
+          class="collection-hero-img"
+          src="https://images.unsplash.com/photo-1523359346063-d879354c0ea5?w=1600&q=85&fit=crop"
+          alt="Women's Collection"
+          onerror="
+            this.style.background = 'linear-gradient(135deg,#D4C4B0,#B8765A)'
+          "
+        />
+        <div class="collection-hero-overlay"></div>
+        <div class="collection-hero-text">
+          <h1>Women</h1>
+          <p>Silk, cashmere, and linen — curated for the journey.</p>
+        </div>
+      </div>
+      <div class="collection-grid-section">
+        <div class="collection-filters">
+          <button
+            class="filter-btn active"
+            onclick="filterProducts(this, 'all', 'women')"
+          >
+            All
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts(this, 'silk', 'women')"
+          >
+            Silk
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts(this, 'cashmere', 'women')"
+          >
+            Cashmere
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts(this, 'linen', 'women')"
+          >
+            Linen
+          </button>
+        </div>
+        <div class="products-grid" id="women-grid">
+          <!-- Riviera Silk Maxi Dress -->
+          <div
+            class="product-card"
+            data-cat="silk"
+            onclick="showProduct('silk-dress')"
+          >
+            <div class="product-img-wrap">
+              <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1583496661160-fb5218b5f4b6?w=700&q=85&fit=crop&crop=top"
+                alt="Riviera Silk Maxi Dress"
+                onerror="
+                  this.style.background =
+                    'linear-gradient(135deg,#1C2535,#B8765A)'
+                "
+              />
+              <img
+                class="product-img-alt"
+                src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=700&q=85&fit=crop"
+                alt="Riviera Silk Maxi Dress alt"
+                onerror="this.style.display = 'none'"
+              />
+              <span class="product-tag-badge">Hero Piece</span>
+              <button
+                class="product-quick-add"
+                onclick="
+                  event.stopPropagation();
+                  quickAdd(
+                    'Riviera Silk Maxi Dress',
+                    'Women · Silk',
+                    '$325',
+                    325,
+                    'https://images.unsplash.com/photo-1583496661160-fb5218b5f4b6?w=120&q=80',
+                  );
+                "
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Women · Silk</p>
+              <h3 class="product-name">Riviera Silk Maxi Dress</h3>
+              <p class="product-desc-short">
+                Washable stretch silk, fluid tiered maxi. Steps off the plane
+                looking perfect.
+              </p>
+              <div class="product-price-row">
+                <span class="product-price">$325</span>
+                <div class="color-swatches">
+                  <div
+                    class="swatch"
+                    style="background: #1c2535"
+                    title="Navy"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #2c2520"
+                    title="Black"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Solera Cashmere Crewneck -->
+          <div
+            class="product-card"
+            data-cat="cashmere"
+            onclick="showProduct('cashmere-w')"
+          >
+            <div class="product-img-wrap">
+              <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=85&fit=crop"
+                alt="Solera Cashmere Crewneck"
+                onerror="
+                  this.style.background =
+                    'linear-gradient(135deg,#C8C4B8,#7A7060)'
+                "
+              />
+              <img
+                class="product-img-alt"
+                src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=700&q=85&fit=crop"
+                alt="Cashmere alt"
+                onerror="this.style.display = 'none'"
+              />
+              <span class="product-tag-badge">Best Seller</span>
+              <button
+                class="product-quick-add"
+                onclick="
+                  event.stopPropagation();
+                  quickAdd(
+                    'Solera Cashmere Crewneck',
+                    'Women · Cashmere',
+                    '$148',
+                    148,
+                    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=120&q=80',
+                  );
+                "
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Women · Cashmere</p>
+              <h3 class="product-name">Solera Cashmere Crewneck</h3>
+              <p class="product-desc-short">
+                Mongolian cashmere, relaxed crewneck. The sweater that makes
+                every destination feel like home.
+              </p>
+              <div class="product-price-row">
+                <span class="product-price">$148</span>
+                <div class="color-swatches">
+                  <div
+                    class="swatch"
+                    style="background: #c0c0c0"
+                    title="Heather Grey"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #1c2535"
+                    title="True Navy"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Brisa Linen Long Sleeve -->
+          <div
+            class="product-card"
+            data-cat="linen"
+            onclick="showProduct('linen-ls-w')"
+          >
+            <div class="product-img-wrap">
+              <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700&q=85&fit=crop"
+                alt="Brisa Linen Long Sleeve"
+                onerror="
+                  this.style.background =
+                    'linear-gradient(135deg,#D4C4A0,#8A9E80)'
+                "
+              />
+              <button
+                class="product-quick-add"
+                onclick="
+                  event.stopPropagation();
+                  quickAdd(
+                    'Brisa Linen Long Sleeve',
+                    'Women · Linen',
+                    '$108',
+                    108,
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=120&q=80',
+                  );
+                "
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Women · Linen</p>
+              <h3 class="product-name">Brisa Linen Long Sleeve</h3>
+              <p class="product-desc-short">
+                100% European linen, relaxed fit. Available in 13 colors.
+              </p>
+              <div class="product-price-row">
+                <span class="product-price">$108</span>
+                <div class="color-swatches">
+                  <div
+                    class="swatch"
+                    style="background: #f5f0e8"
+                    title="White"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #d4c4a0"
+                    title="Flax"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #7a9098"
+                    title="Chambray Blue"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="newsletter" style="padding: 60px">
+        <p class="section-eyebrow" style="color: var(--clay)">
+          Never Miss a Drop
+        </p>
+        <h2 style="font-size: 32px">Join the <em>Arluco</em> list.</h2>
+        <p>Early access to new arrivals and exclusive discounts.</p>
+        <div class="newsletter-form" style="margin-top: 32px">
+          <input
+            type="email"
+            class="newsletter-input"
+            placeholder="Your email address"
+          />
+          <button
+            class="newsletter-btn"
+            onclick="showToast('Thank you! You\'re on the list.')"
+          >
+            Join
+          </button>
+        </div>
+      </section>
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand">
+            <svg
+              width="140"
+              height="32"
+              viewBox="0 0 260 60"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                x1="0"
+                y1="10"
+                x2="82"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <line
+                x1="178"
+                y1="10"
+                x2="260"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <polygon
+                points="130,4 134.5,10 130,16 125.5,10"
+                fill="none"
+                stroke="#B8765A"
+                stroke-width="1.1"
+              />
+              <circle cx="130" cy="10" r="1.5" fill="#B8765A" />
+              <text
+                x="130"
+                y="50"
+                text-anchor="middle"
+                font-family="'Cormorant Garamond',serif"
+                font-weight="300"
+                font-size="36"
+                fill="#FAF8F4"
+                letter-spacing="10"
+              >
+                ARLUCO
+              </text>
+            </svg>
+            <p>Elevated travel clothing for the world in motion.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Shop</h4>
+            <ul>
+              <li onclick="showPage('women')">Women</li>
+              <li onclick="showPage('men')">Men</li>
+              <li onclick="showPage('bundles')">The Looks</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Help</h4>
+            <ul>
+              <li onclick="showToast('Sizing guide coming soon!')">
+                Sizing Guide
+              </li>
+              <li onclick="showToast('Free returns within 30 days')">
+                Returns
+              </li>
+              <li onclick="showToast('Email: hello@arluco.co')">Contact</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li onclick="showPage('about')">Our Story</li>
+              <li onclick="showToast('Journal coming soon!')">Journal</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Arluco. All rights reserved.</p>
+          <div class="footer-social">
+            <span>TikTok</span><span>Instagram</span><span>Pinterest</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE: MEN
+══════════════════════════════════════════ -->
+    <div class="page" id="page-men">
+      <div class="collection-hero">
+        <img
+          class="collection-hero-img"
+          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=1600&q=85&fit=crop&crop=top"
+          alt="Men's Collection"
+          onerror="
+            this.style.background = 'linear-gradient(135deg,#2C2520,#C4A882)'
+          "
+        />
+        <div class="collection-hero-overlay"></div>
+        <div class="collection-hero-text">
+          <h1>Men</h1>
+          <p>European linen and Mongolian cashmere — for every destination.</p>
+        </div>
+      </div>
+      <div class="collection-grid-section">
+        <div class="collection-filters">
+          <button
+            class="filter-btn active"
+            onclick="filterProducts(this, 'all', 'men')"
+          >
+            All
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts(this, 'linen', 'men')"
+          >
+            Linen
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts(this, 'cashmere', 'men')"
+          >
+            Cashmere
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts(this, 'outerwear', 'men')"
+          >
+            Outerwear
+          </button>
+          <button
+            class="filter-btn"
+            onclick="filterProducts(this, 'bottoms', 'men')"
+          >
+            Bottoms
+          </button>
+        </div>
+        <div class="products-grid" id="men-grid">
+          <!-- Lorca Linen Chore Jacket -->
+          <div
+            class="product-card"
+            data-cat="linen outerwear"
+            onclick="showProduct('chore-jacket')"
+          >
+            <div class="product-img-wrap">
+              <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=700&q=85&fit=crop"
+                alt="Lorca Linen Chore Jacket"
+                onerror="
+                  this.style.background =
+                    'linear-gradient(135deg,#D4C4A0,#8A7A5A)'
+                "
+              />
+              <img
+                class="product-img-alt"
+                src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=700&q=85&fit=crop"
+                alt="Jacket alt"
+                onerror="this.style.display = 'none'"
+              />
+              <span class="product-tag-badge">Hero Piece</span>
+              <button
+                class="product-quick-add"
+                onclick="
+                  event.stopPropagation();
+                  quickAdd(
+                    'Lorca Linen Chore Jacket',
+                    'Men · Outerwear',
+                    '$198',
+                    198,
+                    'https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=120&q=80',
+                  );
+                "
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Men · Outerwear</p>
+              <h3 class="product-name">Lorca Linen Chore Jacket</h3>
+              <p class="product-desc-short">
+                100% European linen. Four pockets, relaxed fit, structured
+                enough for dinner.
+              </p>
+              <div class="product-price-row">
+                <span class="product-price">$198</span>
+                <div class="color-swatches">
+                  <div
+                    class="swatch"
+                    style="background: #d4c4a0"
+                    title="Flax"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #1c2535"
+                    title="Navy"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Calma Camp Collar Shirt -->
+          <div
+            class="product-card"
+            data-cat="linen"
+            onclick="showProduct('camp-shirt')"
+          >
+            <div class="product-img-wrap">
+              <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&q=85&fit=crop"
+                alt="Calma Camp Collar Shirt"
+                onerror="
+                  this.style.background =
+                    'linear-gradient(135deg,#C8D4C0,#8A9E80)'
+                "
+              />
+              <span class="product-tag-badge">Best Seller</span>
+              <button
+                class="product-quick-add"
+                onclick="
+                  event.stopPropagation();
+                  quickAdd(
+                    'Calma Camp Collar Shirt',
+                    'Men · Shirts',
+                    '$128',
+                    128,
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80',
+                  );
+                "
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Men · Shirts</p>
+              <h3 class="product-name">Calma Camp Collar Shirt</h3>
+              <p class="product-desc-short">
+                European linen camp collar. The definitive warm-weather shirt.
+                4.9 stars.
+              </p>
+              <div class="product-price-row">
+                <span class="product-price">$128</span>
+                <div class="color-swatches">
+                  <div
+                    class="swatch"
+                    style="background: #d4c4a0"
+                    title="Flax"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #f5f0e8"
+                    title="White"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Brisa Long Sleeve Linen -->
+          <div
+            class="product-card"
+            data-cat="linen"
+            onclick="showProduct('linen-ls-m')"
+          >
+            <div class="product-img-wrap">
+              <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=700&q=85&fit=crop"
+                alt="Brisa Long Sleeve Linen"
+                onerror="
+                  this.style.background =
+                    'linear-gradient(135deg,#C0C8D4,#6A80A0)'
+                "
+              />
+              <button
+                class="product-quick-add"
+                onclick="
+                  event.stopPropagation();
+                  quickAdd(
+                    'Brisa Long Sleeve Linen',
+                    'Men · Shirts',
+                    '$128',
+                    128,
+                    'https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=120&q=80',
+                  );
+                "
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Men · Shirts</p>
+              <h3 class="product-name">Brisa Long Sleeve Linen</h3>
+              <p class="product-desc-short">
+                100% European linen, relaxed oversized cut. Wrinkle-resistant
+                and endlessly packable.
+              </p>
+              <div class="product-price-row">
+                <span class="product-price">$128</span>
+                <div class="color-swatches">
+                  <div
+                    class="swatch"
+                    style="background: #f5f0e8"
+                    title="White"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #7a9098"
+                    title="Chambray Blue"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Escala Linen Trousers -->
+          <div
+            class="product-card"
+            data-cat="linen bottoms"
+            onclick="showProduct('linen-trousers')"
+          >
+            <div class="product-img-wrap">
+              <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=700&q=85&fit=crop"
+                alt="Escala Linen Trousers"
+                onerror="
+                  this.style.background =
+                    'linear-gradient(135deg,#D4D0C0,#A09060)'
+                "
+              />
+              <span class="product-tag-badge">New Arrival</span>
+              <button
+                class="product-quick-add"
+                onclick="
+                  event.stopPropagation();
+                  quickAdd(
+                    'Escala Linen Trousers',
+                    'Men · Bottoms',
+                    '$168',
+                    168,
+                    'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=120&q=80',
+                  );
+                "
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Men · Bottoms</p>
+              <h3 class="product-name">Escala Linen Trousers</h3>
+              <p class="product-desc-short">
+                100% European linen, tailored straight leg. Pairs with the Lorca
+                jacket as a full travel suit.
+              </p>
+              <div class="product-price-row">
+                <span class="product-price">$168</span>
+                <div class="color-swatches">
+                  <div
+                    class="swatch"
+                    style="background: #d4c4a0"
+                    title="Flax"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #1c2535"
+                    title="Navy"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Solera Cashmere Crewneck Men -->
+          <div
+            class="product-card"
+            data-cat="cashmere"
+            onclick="showProduct('cashmere-m')"
+          >
+            <div class="product-img-wrap">
+              <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1550246140-5119ae4790b8?w=700&q=85&fit=crop"
+                alt="Solera Cashmere Crewneck"
+                onerror="
+                  this.style.background =
+                    'linear-gradient(135deg,#C8C4B8,#7A7060)'
+                "
+              />
+              <span class="product-tag-badge">Best Seller</span>
+              <button
+                class="product-quick-add"
+                onclick="
+                  event.stopPropagation();
+                  quickAdd(
+                    'Solera Cashmere Crewneck',
+                    'Men · Cashmere',
+                    '$148',
+                    148,
+                    'https://images.unsplash.com/photo-1550246140-5119ae4790b8?w=120&q=80',
+                  );
+                "
+              >
+                Quick Add
+              </button>
+            </div>
+            <div class="product-info">
+              <p class="product-category">Men · Cashmere</p>
+              <h3 class="product-name">Solera Cashmere Crewneck</h3>
+              <p class="product-desc-short">
+                Mongolian cashmere in a classic crewneck. The sweater that makes
+                every destination feel like home.
+              </p>
+              <div class="product-price-row">
+                <span class="product-price">$148</span>
+                <div class="color-swatches">
+                  <div
+                    class="swatch"
+                    style="background: #c0c0c0"
+                    title="Heather Grey"
+                  ></div>
+                  <div
+                    class="swatch"
+                    style="background: #1c2535"
+                    title="True Navy"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="newsletter" style="padding: 60px">
+        <p class="section-eyebrow" style="color: var(--clay)">
+          Never Miss a Drop
+        </p>
+        <h2 style="font-size: 32px">Join the <em>Arluco</em> list.</h2>
+        <p>Early access to new arrivals and exclusive discounts.</p>
+        <div class="newsletter-form" style="margin-top: 32px">
+          <input
+            type="email"
+            class="newsletter-input"
+            placeholder="Your email address"
+          />
+          <button
+            class="newsletter-btn"
+            onclick="showToast('Thank you! You\'re on the list.')"
+          >
+            Join
+          </button>
+        </div>
+      </section>
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand">
+            <svg
+              width="140"
+              height="32"
+              viewBox="0 0 260 60"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                x1="0"
+                y1="10"
+                x2="82"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <line
+                x1="178"
+                y1="10"
+                x2="260"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <polygon
+                points="130,4 134.5,10 130,16 125.5,10"
+                fill="none"
+                stroke="#B8765A"
+                stroke-width="1.1"
+              />
+              <circle cx="130" cy="10" r="1.5" fill="#B8765A" />
+              <text
+                x="130"
+                y="50"
+                text-anchor="middle"
+                font-family="'Cormorant Garamond',serif"
+                font-weight="300"
+                font-size="36"
+                fill="#FAF8F4"
+                letter-spacing="10"
+              >
+                ARLUCO
+              </text>
+            </svg>
+            <p>Elevated travel clothing for the world in motion.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Shop</h4>
+            <ul>
+              <li onclick="showPage('women')">Women</li>
+              <li onclick="showPage('men')">Men</li>
+              <li onclick="showPage('bundles')">The Looks</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Help</h4>
+            <ul>
+              <li onclick="showToast('Sizing guide coming soon!')">
+                Sizing Guide
+              </li>
+              <li onclick="showToast('Free returns within 30 days')">
+                Returns
+              </li>
+              <li onclick="showToast('Email: hello@arluco.co')">Contact</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li onclick="showPage('about')">Our Story</li>
+              <li onclick="showToast('Journal coming soon!')">Journal</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Arluco. All rights reserved.</p>
+          <div class="footer-social">
+            <span>TikTok</span><span>Instagram</span><span>Pinterest</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE: PRODUCT DETAIL (dynamic)
+══════════════════════════════════════════ -->
+    <div class="page" id="page-product">
+      <div class="pdp" id="pdpContent"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE: BUNDLES / THE LOOKS
+══════════════════════════════════════════ -->
+    <div class="page" id="page-bundles">
+      <div class="bundles-page">
+        <div class="bundles-page-hero">
+          <img
+            src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=85&fit=crop&crop=center"
+            alt="The Looks"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#2C2520,#C4A882)'
+            "
+          />
+          <div class="bundles-page-hero-overlay"></div>
+          <div class="bundles-page-hero-text">
+            <h1>The Looks</h1>
+            <p>Complete outfits. One click. Always at a discount.</p>
+          </div>
+        </div>
+
+        <div class="bundle-detail-section">
+          <!-- BUNDLE 1: Riviera Evening Set -->
+          <div class="bundle-detail">
+            <img
+              class="bundle-detail-img"
+              src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=900&q=85&fit=crop"
+              alt="Riviera Evening Set"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#1C2535,#C4A882)'
+              "
+            />
+            <div class="bundle-detail-content">
+              <p class="bundle-detail-eyebrow">Women · The Complete Look</p>
+              <h2 class="bundle-detail-name">The Riviera Evening Set</h2>
+              <p class="bundle-detail-desc">
+                Silk to the floor, cashmere draped over your shoulders — the
+                complete evening look that travels as beautifully as it wears.
+                From a terrace in Positano to a rooftop in Lisbon.
+              </p>
+              <div class="bundle-includes-list">
+                <div class="bundle-includes-item">
+                  <span class="bundle-item-name">Riviera Silk Maxi Dress</span
+                  ><span class="bundle-item-price">$325</span>
+                </div>
+                <div class="bundle-includes-item">
+                  <span class="bundle-item-name">Solera Cashmere Crewneck</span
+                  ><span class="bundle-item-price">$148</span>
+                </div>
+              </div>
+              <div class="bundle-price-section">
+                <span class="bundle-total">$425</span>
+                <span class="bundle-original">$473</span>
+                <span class="bundle-saving">Save $48</span>
+              </div>
+              <div class="bundle-size-row">
+                <p class="bundle-size-label">Dress Size</p>
+                <div class="bundle-sizes">
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    S
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    M
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    L
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    XL
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    XXL
+                  </button>
+                </div>
+              </div>
+              <div class="bundle-size-row">
+                <p class="bundle-size-label">Crewneck Size</p>
+                <div class="bundle-sizes">
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    S
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    M
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    L
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    XL
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    XXL
+                  </button>
+                </div>
+              </div>
+              <button
+                class="bundle-add-btn"
+                onclick="
+                  quickAdd(
+                    'The Riviera Evening Set',
+                    'Women · Bundle',
+                    '$425',
+                    425,
+                    'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=120&q=80',
+                  )
+                "
+              >
+                Add the Look — $425
+              </button>
+            </div>
+          </div>
+
+          <!-- BUNDLE 2: Linen Travel Suit -->
+          <div class="bundle-detail">
+            <img
+              class="bundle-detail-img"
+              src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=900&q=85&fit=crop"
+              alt="Linen Travel Suit"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#D4C4A0,#2C2520)'
+              "
+            />
+            <div class="bundle-detail-content">
+              <p class="bundle-detail-eyebrow">Men · The Complete Look</p>
+              <h2 class="bundle-detail-name">The Linen Travel Suit</h2>
+              <p class="bundle-detail-desc">
+                A full linen suit under $330. Tailored enough for dinner,
+                relaxed enough for the cobblestone walk there. The kind of
+                outfit that gets noticed in every city.
+              </p>
+              <div class="bundle-includes-list">
+                <div class="bundle-includes-item">
+                  <span class="bundle-item-name">Lorca Linen Chore Jacket</span
+                  ><span class="bundle-item-price">$198</span>
+                </div>
+                <div class="bundle-includes-item">
+                  <span class="bundle-item-name">Escala Linen Trousers</span
+                  ><span class="bundle-item-price">$168</span>
+                </div>
+              </div>
+              <div class="bundle-price-section">
+                <span class="bundle-total">$329</span>
+                <span class="bundle-original">$366</span>
+                <span class="bundle-saving">Save $37</span>
+              </div>
+              <div class="bundle-size-row">
+                <p class="bundle-size-label">Size (Jacket + Trousers)</p>
+                <div class="bundle-sizes">
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    S
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    M
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    L
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    XL
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    XXL
+                  </button>
+                </div>
+              </div>
+              <button
+                class="bundle-add-btn"
+                onclick="
+                  quickAdd(
+                    'The Linen Travel Suit',
+                    'Men · Bundle',
+                    '$329',
+                    329,
+                    'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=120&q=80',
+                  )
+                "
+              >
+                Add the Look — $329
+              </button>
+            </div>
+          </div>
+
+          <!-- BUNDLE 3: Arluco Travel Kit -->
+          <div class="bundle-detail">
+            <img
+              class="bundle-detail-img"
+              src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=900&q=85&fit=crop"
+              alt="Arluco Travel Kit"
+              onerror="
+                this.style.background =
+                  'linear-gradient(135deg,#C4A882,#6B5B4E)'
+              "
+            />
+            <div class="bundle-detail-content">
+              <p class="bundle-detail-eyebrow">Men · The Complete Wardrobe</p>
+              <h2 class="bundle-detail-name">The Arluco Travel Kit</h2>
+              <p class="bundle-detail-desc">
+                Three pieces. Infinite combinations. One carry-on. Everything
+                you need for a week away — from morning coffee in the market to
+                dinner on the terrace.
+              </p>
+              <div class="bundle-includes-list">
+                <div class="bundle-includes-item">
+                  <span class="bundle-item-name">Lorca Linen Chore Jacket</span
+                  ><span class="bundle-item-price">$198</span>
+                </div>
+                <div class="bundle-includes-item">
+                  <span class="bundle-item-name">Escala Linen Trousers</span
+                  ><span class="bundle-item-price">$168</span>
+                </div>
+                <div class="bundle-includes-item">
+                  <span class="bundle-item-name">Calma Camp Collar Shirt</span
+                  ><span class="bundle-item-price">$128</span>
+                </div>
+              </div>
+              <div class="bundle-price-section">
+                <span class="bundle-total">$449</span>
+                <span class="bundle-original">$494</span>
+                <span class="bundle-saving">Save $45</span>
+              </div>
+              <div class="bundle-size-row">
+                <p class="bundle-size-label">Size (All Pieces)</p>
+                <div class="bundle-sizes">
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    S
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    M
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    L
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    XL
+                  </button>
+                  <button
+                    class="bundle-size-btn"
+                    onclick="selectBundleSize(this)"
+                  >
+                    XXL
+                  </button>
+                </div>
+              </div>
+              <button
+                class="bundle-add-btn"
+                onclick="
+                  quickAdd(
+                    'The Arluco Travel Kit',
+                    'Men · Bundle',
+                    '$449',
+                    449,
+                    'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=120&q=80',
+                  )
+                "
+              >
+                Add the Look — $449
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand">
+            <svg
+              width="140"
+              height="32"
+              viewBox="0 0 260 60"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                x1="0"
+                y1="10"
+                x2="82"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <line
+                x1="178"
+                y1="10"
+                x2="260"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <polygon
+                points="130,4 134.5,10 130,16 125.5,10"
+                fill="none"
+                stroke="#B8765A"
+                stroke-width="1.1"
+              />
+              <circle cx="130" cy="10" r="1.5" fill="#B8765A" />
+              <text
+                x="130"
+                y="50"
+                text-anchor="middle"
+                font-family="'Cormorant Garamond',serif"
+                font-weight="300"
+                font-size="36"
+                fill="#FAF8F4"
+                letter-spacing="10"
+              >
+                ARLUCO
+              </text>
+            </svg>
+            <p>Elevated travel clothing for the world in motion.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Shop</h4>
+            <ul>
+              <li onclick="showPage('women')">Women</li>
+              <li onclick="showPage('men')">Men</li>
+              <li onclick="showPage('bundles')">The Looks</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Help</h4>
+            <ul>
+              <li>Sizing Guide</li>
+              <li>Returns</li>
+              <li>Contact</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li onclick="showPage('about')">Our Story</li>
+              <li>Journal</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Arluco. All rights reserved.</p>
+          <div class="footer-social">
+            <span>TikTok</span><span>Instagram</span><span>Pinterest</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     PAGE: ABOUT
+══════════════════════════════════════════ -->
+    <div class="page" id="page-about">
+      <div class="about-page">
+        <div class="about-hero">
+          <img
+            src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=1600&q=85&fit=crop&crop=center"
+            alt="About Arluco"
+            onerror="
+              this.style.background = 'linear-gradient(150deg,#8B6F5C,#5C3D2E)'
+            "
+          />
+          <div class="about-hero-overlay"></div>
+          <div class="about-hero-text"><p>"Wear the world lightly."</p></div>
+        </div>
+        <div class="about-content">
+          <p class="section-eyebrow">Our Story</p>
+          <h2>Travel clothes shouldn't look like travel clothes.</h2>
+          <p>
+            Arluco started with a simple frustration: why does packing for a
+            trip mean choosing between looking good and being comfortable? Why
+            should wrinkle-resistant mean synthetic? Why does elevated mean
+            impractical?
+          </p>
+          <p>
+            We set out to build something different — a travel clothing brand
+            that takes the same approach to packing as the best travelers do.
+            Nothing superfluous. Everything necessary. Every piece chosen for
+            how it moves through the world.
+          </p>
+          <p>
+            We partner with one of the world's most respected fabric-first
+            clothing manufacturers to source European linen, Mongolian cashmere,
+            and washable silk at prices that don't require you to check your bag
+            at the thought of spilling Aperol on your shirt.
+          </p>
+        </div>
+        <div class="about-values">
+          <div class="about-value">
+            <span class="about-value-icon">✦</span>
+            <h3>Fabric First</h3>
+            <p>
+              100% European linen. Mongolian cashmere. Washable silk. We don't
+              compromise on what goes against your skin.
+            </p>
+          </div>
+          <div class="about-value">
+            <span class="about-value-icon">◈</span>
+            <h3>Built to Travel</h3>
+            <p>
+              Every piece is wrinkle-resistant, packable, and engineered to look
+              like you just put it on — no matter how long the flight.
+            </p>
+          </div>
+          <div class="about-value">
+            <span class="about-value-icon">◇</span>
+            <h3>Honest Pricing</h3>
+            <p>
+              We cut out the middlemen. Comparable quality sells for 3× more. We
+              think that's wrong, so we did something about it.
+            </p>
+          </div>
+        </div>
+        <div class="about-quince">
+          <div>
+            <h2>Made Possible By Our Manufacturing Partner</h2>
+            <p>
+              Arluco is built on a white label partnership with one of the most
+              quality-obsessed clothing manufacturers in the world — the same
+              brand known for selling $50 cashmere and $80 silk while
+              maintaining uncompromising standards. Their factory-direct model
+              means we can offer Mongolian cashmere at $148 and washable silk at
+              $325, when comparable products from traditional luxury brands run
+              two to three times that.
+            </p>
+          </div>
+          <div class="about-quince-detail">
+            <div class="about-quince-item">
+              <strong>Materials</strong
+              ><span
+                >100% European Linen, Mongolian Cashmere, Washable Silk</span
+              >
+            </div>
+            <div class="about-quince-item">
+              <strong>Lead Time</strong><span>2–3 weeks on reorders</span>
+            </div>
+            <div class="about-quince-item">
+              <strong>Quality Standard</strong
+              ><span>4.8–5.0 star ratings across all products</span>
+            </div>
+            <div class="about-quince-item">
+              <strong>Our Promise</strong
+              ><span
+                >If it's not right, we make it right. Free returns,
+                always.</span
+              >
+            </div>
+          </div>
+        </div>
+        <section class="newsletter">
+          <p class="section-eyebrow" style="color: var(--clay)">Join Us</p>
+          <h2>Dress for where you're <em>going.</em></h2>
+          <p>
+            Early access, travel stories, and the occasional discount — straight
+            to your inbox.
+          </p>
+          <div class="newsletter-form">
+            <input
+              type="email"
+              class="newsletter-input"
+              placeholder="Your email address"
+            />
+            <button
+              class="newsletter-btn"
+              onclick="showToast('Thank you! You\'re on the list.')"
+            >
+              Join
+            </button>
+          </div>
+        </section>
+      </div>
+      <footer>
+        <div class="footer-top">
+          <div class="footer-brand">
+            <svg
+              width="140"
+              height="32"
+              viewBox="0 0 260 60"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line
+                x1="0"
+                y1="10"
+                x2="82"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <line
+                x1="178"
+                y1="10"
+                x2="260"
+                y2="10"
+                stroke="#C4A882"
+                stroke-width="0.5"
+                opacity="0.5"
+              />
+              <polygon
+                points="130,4 134.5,10 130,16 125.5,10"
+                fill="none"
+                stroke="#B8765A"
+                stroke-width="1.1"
+              />
+              <circle cx="130" cy="10" r="1.5" fill="#B8765A" />
+              <text
+                x="130"
+                y="50"
+                text-anchor="middle"
+                font-family="'Cormorant Garamond',serif"
+                font-weight="300"
+                font-size="36"
+                fill="#FAF8F4"
+                letter-spacing="10"
+              >
+                ARLUCO
+              </text>
+            </svg>
+            <p>Elevated travel clothing for the world in motion.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Shop</h4>
+            <ul>
+              <li onclick="showPage('women')">Women</li>
+              <li onclick="showPage('men')">Men</li>
+              <li onclick="showPage('bundles')">The Looks</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Help</h4>
+            <ul>
+              <li>Sizing Guide</li>
+              <li>Returns</li>
+              <li>Contact</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li onclick="showPage('about')">Our Story</li>
+              <li>Journal</li>
+              <li>Press</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Arluco. All rights reserved.</p>
+          <div class="footer-social">
+            <span>TikTok</span><span>Instagram</span><span>Pinterest</span>
+          </div>
+        </div>
+      </footer>
+    </div>
 
     <script>
-      function showGender(gender) {
+      // ─── PRODUCT DATA ───────────────────────────────────────────────────────────
+      const products = {
+        "silk-dress": {
+          name: "Riviera Silk Maxi Dress",
+          gender: "women",
+          cat: "Women · Dresses",
+          material: "100% Washable Stretch Silk",
+          price: 325,
+          badge: "Hero Piece",
+          desc: "The dress that makes you look like you've been traveling in style your whole life. Washable stretch silk in a fluid tiered maxi — it steps off the plane looking as perfect as it did when you packed it.",
+          details:
+            "Fluid tiered maxi silhouette. Washable stretch silk. Wrinkle-resistant. Breathable and temperature-regulating. Fully lined.",
+          care: "Machine wash cold, gentle cycle. Lay flat to dry. No tumble dry.",
+          sizes: ["S", "M", "L", "XL", "XXL"],
+          colors: [
+            { name: "Navy", hex: "#1C2535" },
+            { name: "Black", hex: "#2C2520" },
+          ],
+          imgs: [
+            "https://images.unsplash.com/photo-1583496661160-fb5218b5f4b6?w=900&q=85&fit=crop&crop=top",
+            "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=900&q=85&fit=crop",
+          ],
+        },
+        "cashmere-w": {
+          name: "Solera Cashmere Crewneck",
+          gender: "women",
+          cat: "Women · Cashmere",
+          material: "100% Mongolian Cashmere",
+          price: 148,
+          badge: "Best Seller",
+          desc: "The sweater that makes every destination feel like home. Mongolian cashmere in a relaxed crewneck — impossibly soft, surprisingly packable, endlessly versatile. Thrown over a silk dress or paired with linen, it always looks intentional.",
+          details:
+            "Relaxed crewneck silhouette. Grade A Mongolian cashmere. Ribbed cuffs and hem. Lightweight yet warm.",
+          care: "Dry clean recommended. Hand wash cold with cashmere shampoo. Lay flat to dry.",
+          sizes: ["S", "M", "L", "XL", "XXL"],
+          colors: [
+            { name: "Heather Grey", hex: "#C0C0C0" },
+            { name: "True Navy", hex: "#1C2535" },
+          ],
+          imgs: [
+            "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=900&q=85&fit=crop",
+          ],
+        },
+        "linen-ls-w": {
+          name: "Brisa Linen Long Sleeve",
+          gender: "women",
+          cat: "Women · Linen",
+          material: "100% European Linen",
+          price: 108,
+          badge: "New Arrival",
+          desc: "100% European linen in a relaxed long sleeve. Wrinkle-resistant and breathable, available in 13 colors. The effortless base layer that goes everywhere.",
+          details:
+            "Relaxed fit. Button front. 100% European linen. Wrinkle-resistant. Available in 13 colors.",
+          care: "Machine wash cold. Tumble dry low. Iron when slightly damp for best results.",
+          sizes: ["S", "M", "L", "XL", "XXL"],
+          colors: [
+            { name: "White", hex: "#F5F0E8" },
+            { name: "Flax", hex: "#D4C4A0" },
+            { name: "Chambray Blue", hex: "#7A9098" },
+            { name: "Vintage Pink", hex: "#D0A090" },
+          ],
+          imgs: [
+            "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1523359346063-d879354c0ea5?w=900&q=85&fit=crop",
+          ],
+        },
+        "chore-jacket": {
+          name: "The Lorca Linen Chore Jacket",
+          gender: "men",
+          cat: "Men · Outerwear",
+          material: "100% European Linen",
+          price: 198,
+          badge: "Hero Piece",
+          desc: "Your most-reached-for layer from Lisbon to Los Angeles. Four oversized pockets, a relaxed fit, and a structure that's casual enough for the market, refined enough for dinner. Best seller with 4.8 stars.",
+          details:
+            "Relaxed fit. Four patch pockets. Button front. 100% European linen. Wrinkle-resistant. Unlined for breathability.",
+          care: "Machine wash cold. Tumble dry low. Expect natural linen softening with wear.",
+          sizes: ["S", "M", "L", "XL", "XXL"],
+          colors: [
+            { name: "Flax", hex: "#D4C4A0" },
+            { name: "Deep Navy", hex: "#1C2535" },
+            { name: "Black", hex: "#2C2520" },
+            { name: "Taupe Brown", hex: "#8A7A5A" },
+          ],
+          imgs: [
+            "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1488161628813-04466f872be2?w=900&q=85&fit=crop",
+          ],
+        },
+        "camp-shirt": {
+          name: "Calma Camp Collar Shirt",
+          gender: "men",
+          cat: "Men · Shirts",
+          material: "100% European Linen",
+          price: 128,
+          badge: "Best Seller",
+          desc: "The definitive warm-weather shirt. Open collar, relaxed body, refined details — this is the shirt you'll pack for every trip and reach for every morning. 4.9 stars across thousands of reviews.",
+          details:
+            "Open camp collar. Relaxed fit. Short sleeve. 100% European linen. Chest pocket. Curved hem.",
+          care: "Machine wash cold. Tumble dry low. Linen softens and improves with every wash.",
+          sizes: ["S", "M", "L", "XL", "XXL"],
+          colors: [
+            { name: "Flax", hex: "#D4C4A0" },
+            { name: "White", hex: "#F5F0E8" },
+            { name: "Chambray Stripe", hex: "#8AABE8" },
+            { name: "Deep Navy", hex: "#1C2535" },
+          ],
+          imgs: [
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=900&q=85&fit=crop",
+          ],
+        },
+        "linen-ls-m": {
+          name: "Brisa Long Sleeve Linen",
+          gender: "men",
+          cat: "Men · Shirts",
+          material: "100% European Linen",
+          price: 128,
+          badge: null,
+          desc: "100% European linen in a relaxed, slightly oversized cut. Wrinkle-resistant and endlessly packable. The shirt you'll reach for every single trip — beach to dinner without changing.",
+          details:
+            "Relaxed fit. Button front. Long sleeve with single button cuff. 100% European linen. Chest pocket.",
+          care: "Machine wash cold. Tumble dry low.",
+          sizes: ["S", "M", "L", "XL", "XXL"],
+          colors: [
+            { name: "White", hex: "#F5F0E8" },
+            { name: "Chambray Blue", hex: "#7A9098" },
+            { name: "Brick", hex: "#8C3A2C" },
+          ],
+          imgs: [
+            "https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=85&fit=crop",
+          ],
+        },
+        "linen-trousers": {
+          name: "Escala Linen Trousers",
+          gender: "men",
+          cat: "Men · Bottoms",
+          material: "100% European Linen",
+          price: 168,
+          badge: "New Arrival",
+          desc: "100% European linen in a tailored straight leg. Pairs with the Lorca Chore Jacket as a complete linen travel suit — the kind of outfit that looks like you brought a tailor. 4.9 stars.",
+          details:
+            "Tailored straight leg. Mid rise. Hook and bar closure with zip fly. Side and back pockets. 100% European linen.",
+          care: "Machine wash cold. Tumble dry low. Hang immediately after washing to minimize creasing.",
+          sizes: ["S", "M", "L", "XL", "XXL"],
+          colors: [
+            { name: "Flax", hex: "#D4C4A0" },
+            { name: "Deep Navy", hex: "#1C2535" },
+            { name: "Black", hex: "#2C2520" },
+          ],
+          imgs: [
+            "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=900&q=85&fit=crop",
+          ],
+        },
+        "cashmere-m": {
+          name: "Solera Cashmere Crewneck",
+          gender: "men",
+          cat: "Men · Cashmere",
+          material: "100% Mongolian Cashmere",
+          price: 148,
+          badge: "Best Seller",
+          desc: "Mongolian cashmere in a classic crewneck. The sweater that makes every destination feel like home — on the plane, on the terrace, at dinner. 4.9 stars.",
+          details:
+            "Classic crewneck silhouette. Grade A Mongolian cashmere. Ribbed cuffs, collar, and hem. Mid-weight warmth.",
+          care: "Dry clean recommended. Hand wash cold with cashmere shampoo. Lay flat to dry.",
+          sizes: ["S", "M", "L", "XL", "XXL"],
+          colors: [
+            { name: "Heather Grey", hex: "#C0C0C0" },
+            { name: "True Navy", hex: "#1C2535" },
+            { name: "Moss", hex: "#6A7850" },
+            { name: "Black", hex: "#2C2520" },
+          ],
+          imgs: [
+            "https://images.unsplash.com/photo-1550246140-5119ae4790b8?w=900&q=85&fit=crop",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=900&q=85&fit=crop",
+          ],
+        },
+      };
+
+      // ─── STATE ───────────────────────────────────────────────────────────────────
+      let cart = [];
+      let currentPage = "home";
+      let currentProduct = null;
+      let selectedColor = 0;
+      let selectedSize = null;
+
+      // ─── NAVIGATION ──────────────────────────────────────────────────────────────
+      function showPage(page) {
         document
-          .getElementById("tab-women")
-          .classList.toggle("active", gender === "women");
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
         document
-          .getElementById("tab-men")
-          .classList.toggle("active", gender === "men");
-        document
-          .getElementById("tab-bundles")
-          .classList.toggle("active", gender === "bundles");
-        document.querySelectorAll(".product-card").forEach((card) => {
-          const show = card.dataset.gender === gender;
-          card.style.display = show ? "block" : "none";
-          if (show) card.classList.add("visible");
-        });
-        // Re-feature first visible card
-        if (window.innerWidth > 768) {
-          document
-            .querySelectorAll(".product-card")
-            .forEach((c) => c.classList.remove("featured"));
-          const first = document.querySelector(
-            `.product-card[data-gender="${gender}"]`,
-          );
-          if (first) first.classList.add("featured");
+          .querySelectorAll(".nav-links a")
+          .forEach((a) => a.classList.remove("active"));
+        const el = document.getElementById("page-" + page);
+        if (el) {
+          el.classList.add("active");
+          window.scrollTo(0, 0);
         }
-        document
-          .getElementById("collection")
-          .scrollIntoView({ behavior: "smooth", block: "start" });
+        const navEl = document.getElementById("nav-" + page);
+        if (navEl) navEl.classList.add("active");
+        currentPage = page;
+        // trigger fade-ups
+        setTimeout(() => {
+          document
+            .querySelectorAll("#page-" + page + " .fade-up")
+            .forEach((el) => {
+              if (!el.classList.contains("visible"))
+                el.classList.add("visible");
+            });
+        }, 100);
       }
 
-      // Size selector
-      document.querySelectorAll(".size-btn").forEach((btn) => {
-        btn.addEventListener("click", function () {
-          this.closest(".size-row")
-            .querySelectorAll(".size-btn")
-            .forEach((b) => {
-              b.style.background = "transparent";
-              b.style.color = "var(--mid)";
-              b.style.borderColor = "rgba(196,168,130,0.35)";
-            });
-          this.style.background = "var(--deep)";
-          this.style.color = "var(--warm-white)";
-          this.style.borderColor = "var(--deep)";
-        });
-      });
+      // ─── PRODUCT DETAIL PAGE ──────────────────────────────────────────────────────
+      function showProduct(id) {
+        const p = products[id];
+        if (!p) return;
+        currentProduct = id;
+        selectedColor = 0;
+        selectedSize = null;
+        const thumbs = p.imgs
+          .map(
+            (src, i) =>
+              `<img class="pdp-thumb ${i === 0 ? "active" : ""}" src="${src}" alt="${p.name}" onclick="switchImg(this,'${src}')" onerror="this.style.display='none'">`,
+          )
+          .join("");
+        const colors = p.colors
+          .map(
+            (c, i) =>
+              `<div class="color-opt ${i === 0 ? "active" : ""}" style="background:${c.hex}" title="${c.name}" onclick="selectColor(this,${i})"></div><span class="color-opt-name" id="colorName">${i === 0 ? c.name : ""}</span>`,
+          )
+          .join("");
+        const sizes = p.sizes
+          .map(
+            (s) =>
+              `<button class="size-opt" onclick="selectSize(this,'${s}')">${s}</button>`,
+          )
+          .join("");
+        document.getElementById("pdpContent").innerHTML = `
+    <div class="pdp-grid">
+      <div class="pdp-gallery">
+        <img class="pdp-main-img" id="pdpMainImg" src="${p.imgs[0]}" alt="${p.name}" onerror="this.style.background='linear-gradient(135deg,#D4C4B0,#B8765A)'">
+        <div class="pdp-thumbnails">${thumbs}</div>
+      </div>
+      <div class="pdp-info">
+        <p class="pdp-breadcrumb" onclick="showPage('${p.gender}')">← ${p.gender.charAt(0).toUpperCase() + p.gender.slice(1)} / <span>${p.cat}</span></p>
+        ${p.badge ? `<span class="pdp-badge">${p.badge}</span>` : ""}
+        <h1 class="pdp-name">${p.name}</h1>
+        <p class="pdp-material">${p.material}</p>
+        <p class="pdp-price">$${p.price}</p>
+        <div class="pdp-divider"></div>
+        <p class="pdp-label">Color — <span id="selectedColorName">${p.colors[0].name}</span></p>
+        <div class="color-options" style="flex-wrap:wrap;gap:8px">${p.colors.map((c, i) => `<div class="color-opt ${i === 0 ? "active" : ""}" style="background:${c.hex}" title="${c.name}" onclick="selectPdpColor(this,${i},'${c.name}')"></div>`).join("")}</div>
+        <p class="pdp-label" style="margin-top:20px">Size</p>
+        <div class="size-options">${sizes}</div>
+        <button class="pdp-add-btn" onclick="addToCart()">Add to Bag</button>
+        <button class="pdp-save-btn" onclick="showToast('Saved to wishlist!')">♡ Save for Later</button>
+        <details class="pdp-details"><summary>Product Details</summary><p>${p.details}</p></details>
+        <details class="pdp-details"><summary>Care Instructions</summary><p>${p.care}</p></details>
+        <details class="pdp-details"><summary>Shipping & Returns</summary><p>Ships in 2–3 weeks from order. Free returns within 30 days of delivery — no questions asked.</p></details>
+        <div class="pdp-guarantee">
+          <span style="font-size:22px">✦</span>
+          <div class="pdp-guarantee-text"><strong>The Arluco Promise</strong>If you're not completely happy with your purchase, we'll make it right. Free returns, always.</div>
+        </div>
+      </div>
+    </div>
+  `;
+        showPage("product");
+      }
 
-      // Add to bag feedback
-      document.querySelectorAll(".add-to-cart").forEach((btn) => {
-        btn.addEventListener("click", function () {
-          const orig = this.textContent;
-          this.textContent = "Added ✓";
-          this.style.background = "var(--terracotta)";
-          setTimeout(() => {
-            this.textContent = orig;
-            this.style.background = "var(--deep)";
-          }, 1800);
-        });
-      });
+      function switchImg(thumb, src) {
+        document
+          .querySelectorAll(".pdp-thumb")
+          .forEach((t) => t.classList.remove("active"));
+        thumb.classList.add("active");
+        document.getElementById("pdpMainImg").src = src;
+      }
 
+      function selectPdpColor(el, idx, name) {
+        document
+          .querySelectorAll(".color-opt")
+          .forEach((c) => c.classList.remove("active"));
+        el.classList.add("active");
+        selectedColor = idx;
+        document.getElementById("selectedColorName").textContent = name;
+      }
+
+      function selectSize(btn, size) {
+        document
+          .querySelectorAll(".size-opt")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedSize = size;
+      }
+
+      function addToCart() {
+        const p = products[currentProduct];
+        if (!selectedSize) {
+          showToast("Please select a size");
+          return;
+        }
+        const color = p.colors[selectedColor].name;
+        quickAdd(
+          p.name,
+          `${p.cat} · ${color} · ${selectedSize}`,
+          `$${p.price}`,
+          p.price,
+          p.imgs[0],
+        );
+      }
+
+      // ─── CART ─────────────────────────────────────────────────────────────────────
+      function quickAdd(name, detail, priceStr, price, img) {
+        cart.push({ name, detail, priceStr, price, img, id: Date.now() });
+        updateCart();
+        openCart();
+        showToast(name + " added to bag");
+      }
+
+      function removeFromCart(id) {
+        cart = cart.filter((i) => i.id !== id);
+        updateCart();
+      }
+
+      function updateCart() {
+        const count = cart.length;
+        const countEl = document.getElementById("cartCount");
+        countEl.textContent = count;
+        countEl.style.display = count > 0 ? "flex" : "none";
+        const itemsEl = document.getElementById("cartItems");
+        const footerEl = document.getElementById("cartFooter");
+        if (count === 0) {
+          itemsEl.innerHTML = `<div class="cart-empty">Your bag is empty.<br><br><button class="btn-ghost" onclick="closeCart();showPage('women')">Start Shopping</button></div>`;
+          footerEl.style.display = "none";
+        } else {
+          itemsEl.innerHTML = cart
+            .map(
+              (item) => `
+      <div class="cart-item">
+        <img class="cart-item-img" src="${item.img}" alt="${item.name}" onerror="this.style.background='var(--bone)'">
+        <div>
+          <p class="cart-item-name">${item.name}</p>
+          <p class="cart-item-detail">${item.detail}</p>
+          <p class="cart-item-price">${item.priceStr}</p>
+          <button class="cart-item-remove" onclick="removeFromCart(${item.id})">Remove</button>
+        </div>
+      </div>
+    `,
+            )
+            .join("");
+          const total = cart.reduce((s, i) => s + i.price, 0);
+          document.getElementById("cartTotal").textContent =
+            "$" + total.toLocaleString();
+          footerEl.style.display = "block";
+        }
+      }
+
+      function openCart() {
+        document.getElementById("cartDrawer").classList.add("open");
+        document.getElementById("cartOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeCart() {
+        document.getElementById("cartDrawer").classList.remove("open");
+        document.getElementById("cartOverlay").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      // ─── FILTERS ──────────────────────────────────────────────────────────────────
+      function filterProducts(btn, cat, gender) {
+        document
+          .querySelectorAll("#page-" + gender + " .filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        document
+          .querySelectorAll("#" + gender + "-grid .product-card")
+          .forEach((card) => {
+            const show = cat === "all" || card.dataset.cat.includes(cat);
+            card.style.display = show ? "block" : "none";
+          });
+      }
+
+      // ─── BUNDLE SIZES ────────────────────────────────────────────────────────────
+      function selectBundleSize(btn) {
+        const group = btn.closest(".bundle-sizes");
+        group
+          .querySelectorAll(".bundle-size-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+
+      // ─── TOAST ────────────────────────────────────────────────────────────────────
+      let toastTimer;
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 2800);
+      }
+
+      // ─── SCROLL ANIMATIONS ───────────────────────────────────────────────────────
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
@@ -2033,14 +4369,14 @@
         .querySelectorAll(".fade-up")
         .forEach((el) => observer.observe(el));
 
+      // ─── NAV SCROLL ──────────────────────────────────────────────────────────────
       window.addEventListener("scroll", () => {
         document.getElementById("mainNav").style.padding =
-          window.scrollY > 80 ? "14px 60px" : "20px 60px";
+          window.scrollY > 80 ? "12px 60px" : "18px 60px";
       });
-      function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      showGender("women");
+
+      // ─── INIT ─────────────────────────────────────────────────────────────────────
+      showPage("home");
     </script>
   </body>
 </html>
